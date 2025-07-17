@@ -1,0 +1,201 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "e-commercial",
+    "version": "1.0"
+  },
+  "paths": {
+    "/api/Laptop/{id}": {
+      "get": {
+        "tags": [
+          "Laptop"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Laptop"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LaptopUpdateDTO"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LaptopUpdateDTO"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/LaptopUpdateDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Laptop": {
+      "get": {
+        "tags": [
+          "Laptop"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Laptop"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LaptopCreateDTO"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LaptopCreateDTO"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/LaptopCreateDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "LaptopCreateDTO": {
+        "required": [
+          "categoryId",
+          "laptopDescription",
+          "laptopName",
+          "laptopSize",
+          "manufacturerId"
+        ],
+        "type": "object",
+        "properties": {
+          "laptopName": {
+            "maxLength": 255,
+            "minLength": 0,
+            "type": "string"
+          },
+          "laptopSize": {
+            "maximum": 100,
+            "minimum": 0,
+            "type": "number",
+            "format": "float"
+          },
+          "laptopDescription": {
+            "maxLength": 255,
+            "minLength": 0,
+            "type": "string"
+          },
+          "laptopImage": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "nullable": true
+          },
+          "categoryId": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "manufacturerId": {
+            "minLength": 1,
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      },
+      "LaptopUpdateDTO": {
+        "type": "object",
+        "properties": {
+          "laptopName": {
+            "maxLength": 255,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true
+          },
+          "laptopSize": {
+            "maximum": 100,
+            "minimum": 0,
+            "type": "number",
+            "format": "float",
+            "nullable": true
+          },
+          "laptopDescription": {
+            "maxLength": 255,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true
+          },
+          "laptopImage": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "nullable": true
+          },
+          "categoryId": {
+            "type": "string",
+            "nullable": true
+          },
+          "manufacturerId": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      }
+    }
+  }
+}

@@ -1,0 +1,65 @@
+[
+  {
+    "ContainingType": "e_commercial.Controllers.LaptopController",
+    "Method": "GetAll",
+    "RelativePath": "api/Laptop",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "e_commercial.Controllers.LaptopController",
+    "Method": "Create",
+    "RelativePath": "api/Laptop",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "laptopDTO",
+        "Type": "e_commercial.DTOs.Request.Laptop.LaptopCreateDTO",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "e_commercial.Controllers.LaptopController",
+    "Method": "GetDetailByID",
+    "RelativePath": "api/Laptop/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Guid",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "e_commercial.Controllers.LaptopController",
+    "Method": "Update",
+    "RelativePath": "api/Laptop/{id}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "laptopDTO",
+        "Type": "e_commercial.DTOs.Request.Laptop.LaptopUpdateDTO",
+        "IsRequired": true
+      },
+      {
+        "Name": "id",
+        "Type": "System.Guid",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  }
+]
