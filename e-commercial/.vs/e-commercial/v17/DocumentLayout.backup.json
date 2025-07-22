@@ -1,98 +1,42 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "D:\\Backend Projects\\e-commercial\\",
+  "WorkspaceRootPath": "D:\\Backend Projects\\reagvn\\e-commercial\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{C5352D45-3AB1-4FB2-AAEB-382527125F84}|e-commercial\\e-commercial.csproj|d:\\backend projects\\e-commercial\\e-commercial\\services\\laptopservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{C5352D45-3AB1-4FB2-AAEB-382527125F84}|e-commercial\\e-commercial.csproj|solutionrelative:e-commercial\\services\\laptopservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{C5352D45-3AB1-4FB2-AAEB-382527125F84}|e-commercial\\e-commercial.csproj|d:\\backend projects\\reagvn\\e-commercial\\e-commercial\\services\\jwtservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C5352D45-3AB1-4FB2-AAEB-382527125F84}|e-commercial\\e-commercial.csproj|solutionrelative:e-commercial\\services\\jwtservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{C5352D45-3AB1-4FB2-AAEB-382527125F84}|e-commercial\\e-commercial.csproj|d:\\backend projects\\e-commercial\\e-commercial\\controllers\\laptopcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{C5352D45-3AB1-4FB2-AAEB-382527125F84}|e-commercial\\e-commercial.csproj|solutionrelative:e-commercial\\controllers\\laptopcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{C5352D45-3AB1-4FB2-AAEB-382527125F84}|e-commercial\\e-commercial.csproj|d:\\backend projects\\reagvn\\e-commercial\\e-commercial\\services\\userservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C5352D45-3AB1-4FB2-AAEB-382527125F84}|e-commercial\\e-commercial.csproj|solutionrelative:e-commercial\\services\\userservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{C5352D45-3AB1-4FB2-AAEB-382527125F84}|e-commercial\\e-commercial.csproj|d:\\backend projects\\e-commercial\\e-commercial\\dtos\\request\\laptop\\laptopupdatedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{C5352D45-3AB1-4FB2-AAEB-382527125F84}|e-commercial\\e-commercial.csproj|solutionrelative:e-commercial\\dtos\\request\\laptop\\laptopupdatedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{C5352D45-3AB1-4FB2-AAEB-382527125F84}|e-commercial\\e-commercial.csproj|d:\\backend projects\\reagvn\\e-commercial\\e-commercial\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{C5352D45-3AB1-4FB2-AAEB-382527125F84}|e-commercial\\e-commercial.csproj|solutionrelative:e-commercial\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{C5352D45-3AB1-4FB2-AAEB-382527125F84}|e-commercial\\e-commercial.csproj|d:\\backend projects\\e-commercial\\e-commercial\\repositories\\userrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{C5352D45-3AB1-4FB2-AAEB-382527125F84}|e-commercial\\e-commercial.csproj|d:\\backend projects\\reagvn\\e-commercial\\e-commercial\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C5352D45-3AB1-4FB2-AAEB-382527125F84}|e-commercial\\e-commercial.csproj|solutionrelative:e-commercial\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C5352D45-3AB1-4FB2-AAEB-382527125F84}|e-commercial\\e-commercial.csproj|d:\\backend projects\\reagvn\\e-commercial\\e-commercial\\controllers\\usercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C5352D45-3AB1-4FB2-AAEB-382527125F84}|e-commercial\\e-commercial.csproj|solutionrelative:e-commercial\\controllers\\usercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C5352D45-3AB1-4FB2-AAEB-382527125F84}|e-commercial\\e-commercial.csproj|d:\\backend projects\\reagvn\\e-commercial\\e-commercial\\dtos\\request\\user\\userlogindto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C5352D45-3AB1-4FB2-AAEB-382527125F84}|e-commercial\\e-commercial.csproj|solutionrelative:e-commercial\\dtos\\request\\user\\userlogindto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C5352D45-3AB1-4FB2-AAEB-382527125F84}|e-commercial\\e-commercial.csproj|d:\\backend projects\\reagvn\\e-commercial\\e-commercial\\readme.md||{EFC0BB08-EA7D-40C6-A696-C870411A895B}",
+      "RelativeMoniker": "D:0:0:{C5352D45-3AB1-4FB2-AAEB-382527125F84}|e-commercial\\e-commercial.csproj|solutionrelative:e-commercial\\readme.md||{EFC0BB08-EA7D-40C6-A696-C870411A895B}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C5352D45-3AB1-4FB2-AAEB-382527125F84}|e-commercial\\e-commercial.csproj|d:\\backend projects\\reagvn\\e-commercial\\e-commercial\\repositories\\userrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{C5352D45-3AB1-4FB2-AAEB-382527125F84}|e-commercial\\e-commercial.csproj|solutionrelative:e-commercial\\repositories\\userrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{C5352D45-3AB1-4FB2-AAEB-382527125F84}|e-commercial\\e-commercial.csproj|d:\\backend projects\\e-commercial\\e-commercial\\dtos\\request\\laptop\\laptopcreatedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{C5352D45-3AB1-4FB2-AAEB-382527125F84}|e-commercial\\e-commercial.csproj|solutionrelative:e-commercial\\dtos\\request\\laptop\\laptopcreatedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{C5352D45-3AB1-4FB2-AAEB-382527125F84}|e-commercial\\e-commercial.csproj|d:\\backend projects\\e-commercial\\e-commercial\\models\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{C5352D45-3AB1-4FB2-AAEB-382527125F84}|e-commercial\\e-commercial.csproj|solutionrelative:e-commercial\\models\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{C5352D45-3AB1-4FB2-AAEB-382527125F84}|e-commercial\\e-commercial.csproj|d:\\backend projects\\e-commercial\\e-commercial\\models\\branch.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{C5352D45-3AB1-4FB2-AAEB-382527125F84}|e-commercial\\e-commercial.csproj|solutionrelative:e-commercial\\models\\branch.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{C5352D45-3AB1-4FB2-AAEB-382527125F84}|e-commercial\\e-commercial.csproj|d:\\backend projects\\e-commercial\\e-commercial\\repositories\\manufacturerrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{C5352D45-3AB1-4FB2-AAEB-382527125F84}|e-commercial\\e-commercial.csproj|solutionrelative:e-commercial\\repositories\\manufacturerrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{C5352D45-3AB1-4FB2-AAEB-382527125F84}|e-commercial\\e-commercial.csproj|d:\\backend projects\\e-commercial\\e-commercial\\repositories\\interfaces\\iuserrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{C5352D45-3AB1-4FB2-AAEB-382527125F84}|e-commercial\\e-commercial.csproj|solutionrelative:e-commercial\\repositories\\interfaces\\iuserrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{C5352D45-3AB1-4FB2-AAEB-382527125F84}|e-commercial\\e-commercial.csproj|d:\\backend projects\\e-commercial\\e-commercial\\repositories\\interfaces\\ibranchrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{C5352D45-3AB1-4FB2-AAEB-382527125F84}|e-commercial\\e-commercial.csproj|solutionrelative:e-commercial\\repositories\\interfaces\\ibranchrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{C5352D45-3AB1-4FB2-AAEB-382527125F84}|e-commercial\\e-commercial.csproj|d:\\backend projects\\e-commercial\\e-commercial\\dtos\\request\\usercreatedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{C5352D45-3AB1-4FB2-AAEB-382527125F84}|e-commercial\\e-commercial.csproj|solutionrelative:e-commercial\\dtos\\request\\usercreatedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{C5352D45-3AB1-4FB2-AAEB-382527125F84}|e-commercial\\e-commercial.csproj|d:\\backend projects\\e-commercial\\e-commercial\\repositories\\employeerepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{C5352D45-3AB1-4FB2-AAEB-382527125F84}|e-commercial\\e-commercial.csproj|solutionrelative:e-commercial\\repositories\\employeerepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{C5352D45-3AB1-4FB2-AAEB-382527125F84}|e-commercial\\e-commercial.csproj|d:\\backend projects\\e-commercial\\e-commercial\\models\\employee.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{C5352D45-3AB1-4FB2-AAEB-382527125F84}|e-commercial\\e-commercial.csproj|solutionrelative:e-commercial\\models\\employee.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{C5352D45-3AB1-4FB2-AAEB-382527125F84}|e-commercial\\e-commercial.csproj|d:\\backend projects\\e-commercial\\e-commercial\\repositories\\interfaces\\iemployeerepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{C5352D45-3AB1-4FB2-AAEB-382527125F84}|e-commercial\\e-commercial.csproj|solutionrelative:e-commercial\\repositories\\interfaces\\iemployeerepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{C5352D45-3AB1-4FB2-AAEB-382527125F84}|e-commercial\\e-commercial.csproj|d:\\backend projects\\e-commercial\\e-commercial\\repositories\\branchrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{C5352D45-3AB1-4FB2-AAEB-382527125F84}|e-commercial\\e-commercial.csproj|solutionrelative:e-commercial\\repositories\\branchrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{C5352D45-3AB1-4FB2-AAEB-382527125F84}|e-commercial\\e-commercial.csproj|d:\\backend projects\\e-commercial\\e-commercial\\repositories\\interfaces\\idepartmenrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{C5352D45-3AB1-4FB2-AAEB-382527125F84}|e-commercial\\e-commercial.csproj|solutionrelative:e-commercial\\repositories\\interfaces\\idepartmenrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{C5352D45-3AB1-4FB2-AAEB-382527125F84}|e-commercial\\e-commercial.csproj|d:\\backend projects\\e-commercial\\e-commercial\\dtos\\request\\employeecreatedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{C5352D45-3AB1-4FB2-AAEB-382527125F84}|e-commercial\\e-commercial.csproj|solutionrelative:e-commercial\\dtos\\request\\employeecreatedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{C5352D45-3AB1-4FB2-AAEB-382527125F84}|e-commercial\\e-commercial.csproj|d:\\backend projects\\e-commercial\\e-commercial\\models\\department.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{C5352D45-3AB1-4FB2-AAEB-382527125F84}|e-commercial\\e-commercial.csproj|solutionrelative:e-commercial\\models\\department.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{C5352D45-3AB1-4FB2-AAEB-382527125F84}|e-commercial\\e-commercial.csproj|d:\\backend projects\\e-commercial\\e-commercial\\repositories\\departmentrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{C5352D45-3AB1-4FB2-AAEB-382527125F84}|e-commercial\\e-commercial.csproj|solutionrelative:e-commercial\\repositories\\departmentrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{C5352D45-3AB1-4FB2-AAEB-382527125F84}|e-commercial\\e-commercial.csproj|d:\\backend projects\\e-commercial\\e-commercial\\repositories\\categoryrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{C5352D45-3AB1-4FB2-AAEB-382527125F84}|e-commercial\\e-commercial.csproj|solutionrelative:e-commercial\\repositories\\categoryrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{C5352D45-3AB1-4FB2-AAEB-382527125F84}|e-commercial\\e-commercial.csproj|d:\\backend projects\\e-commercial\\e-commercial\\dtos\\request\\departmentcreatedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{C5352D45-3AB1-4FB2-AAEB-382527125F84}|e-commercial\\e-commercial.csproj|solutionrelative:e-commercial\\dtos\\request\\departmentcreatedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{C5352D45-3AB1-4FB2-AAEB-382527125F84}|e-commercial\\e-commercial.csproj|d:\\backend projects\\e-commercial\\e-commercial\\dtos\\request\\branchcreatedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{C5352D45-3AB1-4FB2-AAEB-382527125F84}|e-commercial\\e-commercial.csproj|solutionrelative:e-commercial\\dtos\\request\\branchcreatedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{C5352D45-3AB1-4FB2-AAEB-382527125F84}|e-commercial\\e-commercial.csproj|d:\\backend projects\\e-commercial\\e-commercial\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{C5352D45-3AB1-4FB2-AAEB-382527125F84}|e-commercial\\e-commercial.csproj|solutionrelative:e-commercial\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{C5352D45-3AB1-4FB2-AAEB-382527125F84}|e-commercial\\e-commercial.csproj|d:\\backend projects\\reagvn\\e-commercial\\e-commercial\\exceptions\\badvalidationexception.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C5352D45-3AB1-4FB2-AAEB-382527125F84}|e-commercial\\e-commercial.csproj|solutionrelative:e-commercial\\exceptions\\badvalidationexception.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -102,287 +46,124 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 9,
+          "SelectedChildIndex": 1,
           "Children": [
             {
               "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "Readme.md",
+              "DocumentMoniker": "D:\\Backend Projects\\reagvn\\e-commercial\\e-commercial\\Readme.md",
+              "RelativeDocumentMoniker": "e-commercial\\Readme.md",
+              "ToolTip": "D:\\Backend Projects\\reagvn\\e-commercial\\e-commercial\\Readme.md",
+              "RelativeToolTip": "e-commercial\\Readme.md",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001818|",
+              "WhenOpened": "2025-07-22T04:29:38.068Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "JWTService.cs",
+              "DocumentMoniker": "D:\\Backend Projects\\reagvn\\e-commercial\\e-commercial\\Services\\JWTService.cs",
+              "RelativeDocumentMoniker": "e-commercial\\Services\\JWTService.cs",
+              "ToolTip": "D:\\Backend Projects\\reagvn\\e-commercial\\e-commercial\\Services\\JWTService.cs",
+              "RelativeToolTip": "e-commercial\\Services\\JWTService.cs",
+              "ViewState": "AgIAAA0AAAAAAAAAAAAAAB4AAABUAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-22T02:41:33.736Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "UserLoginDTO.cs",
+              "DocumentMoniker": "D:\\Backend Projects\\reagvn\\e-commercial\\e-commercial\\DTOs\\Request\\User\\UserLoginDTO.cs",
+              "RelativeDocumentMoniker": "e-commercial\\DTOs\\Request\\User\\UserLoginDTO.cs",
+              "ToolTip": "D:\\Backend Projects\\reagvn\\e-commercial\\e-commercial\\DTOs\\Request\\User\\UserLoginDTO.cs",
+              "RelativeToolTip": "e-commercial\\DTOs\\Request\\User\\UserLoginDTO.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAqwA0AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-22T01:46:10.418Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
               "DocumentIndex": 1,
-              "Title": "LaptopController.cs",
-              "DocumentMoniker": "D:\\Backend Projects\\e-commercial\\e-commercial\\Controllers\\LaptopController.cs",
-              "RelativeDocumentMoniker": "e-commercial\\Controllers\\LaptopController.cs",
-              "ToolTip": "D:\\Backend Projects\\e-commercial\\e-commercial\\Controllers\\LaptopController.cs",
-              "RelativeToolTip": "e-commercial\\Controllers\\LaptopController.cs",
-              "ViewState": "AgIAABoAAAAAAAAAAAAAAAsAAAAmAAAAAAAAAA==",
+              "Title": "UserService.cs",
+              "DocumentMoniker": "D:\\Backend Projects\\reagvn\\e-commercial\\e-commercial\\Services\\UserService.cs",
+              "RelativeDocumentMoniker": "e-commercial\\Services\\UserService.cs",
+              "ToolTip": "D:\\Backend Projects\\reagvn\\e-commercial\\e-commercial\\Services\\UserService.cs",
+              "RelativeToolTip": "e-commercial\\Services\\UserService.cs",
+              "ViewState": "AgIAAAoAAAAAAAAAAAAAAC0AAAAUAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-15T09:10:51.631Z",
+              "WhenOpened": "2025-07-17T14:28:30.876Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "LaptopUpdateDTO.cs",
-              "DocumentMoniker": "D:\\Backend Projects\\e-commercial\\e-commercial\\DTOs\\Request\\Laptop\\LaptopUpdateDTO.cs",
-              "RelativeDocumentMoniker": "e-commercial\\DTOs\\Request\\Laptop\\LaptopUpdateDTO.cs",
-              "ToolTip": "D:\\Backend Projects\\e-commercial\\e-commercial\\DTOs\\Request\\Laptop\\LaptopUpdateDTO.cs",
-              "RelativeToolTip": "e-commercial\\DTOs\\Request\\Laptop\\LaptopUpdateDTO.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAqwAYAAAAbAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-15T09:03:52.912Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 7,
               "Title": "UserRepository.cs",
-              "DocumentMoniker": "D:\\Backend Projects\\e-commercial\\e-commercial\\Repositories\\UserRepository.cs",
+              "DocumentMoniker": "D:\\Backend Projects\\reagvn\\e-commercial\\e-commercial\\Repositories\\UserRepository.cs",
               "RelativeDocumentMoniker": "e-commercial\\Repositories\\UserRepository.cs",
-              "ToolTip": "D:\\Backend Projects\\e-commercial\\e-commercial\\Repositories\\UserRepository.cs",
+              "ToolTip": "D:\\Backend Projects\\reagvn\\e-commercial\\e-commercial\\Repositories\\UserRepository.cs",
               "RelativeToolTip": "e-commercial\\Repositories\\UserRepository.cs",
-              "ViewState": "AgIAABAAAAAAAAAAAAAAAEQAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAB8AAAAAAAAAAAAAABIAAAAMAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-07-15T08:37:34.005Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
-              "Title": "IUserRepository.cs",
-              "DocumentMoniker": "D:\\Backend Projects\\e-commercial\\e-commercial\\Repositories\\Interfaces\\IUserRepository.cs",
-              "RelativeDocumentMoniker": "e-commercial\\Repositories\\Interfaces\\IUserRepository.cs",
-              "ToolTip": "D:\\Backend Projects\\e-commercial\\e-commercial\\Repositories\\Interfaces\\IUserRepository.cs",
-              "RelativeToolTip": "e-commercial\\Repositories\\Interfaces\\IUserRepository.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAqwAsAAAAYAAAAAAAAAA==",
+              "DocumentIndex": 4,
+              "Title": "UserController.cs",
+              "DocumentMoniker": "D:\\Backend Projects\\reagvn\\e-commercial\\e-commercial\\Controllers\\UserController.cs",
+              "RelativeDocumentMoniker": "e-commercial\\Controllers\\UserController.cs",
+              "ToolTip": "D:\\Backend Projects\\reagvn\\e-commercial\\e-commercial\\Controllers\\UserController.cs",
+              "RelativeToolTip": "e-commercial\\Controllers\\UserController.cs",
+              "ViewState": "AgIAACcAAAAAAAAAAAAAADsAAAAoAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-15T08:33:57.657Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 10,
-              "Title": "UserCreateDTO.cs",
-              "DocumentMoniker": "D:\\Backend Projects\\e-commercial\\e-commercial\\DTOs\\Request\\UserCreateDTO.cs",
-              "RelativeDocumentMoniker": "e-commercial\\DTOs\\Request\\UserCreateDTO.cs",
-              "ToolTip": "D:\\Backend Projects\\e-commercial\\e-commercial\\DTOs\\Request\\UserCreateDTO.cs",
-              "RelativeToolTip": "e-commercial\\DTOs\\Request\\UserCreateDTO.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAASAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-15T08:31:29.955Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "User.cs",
-              "DocumentMoniker": "D:\\Backend Projects\\e-commercial\\e-commercial\\Models\\User.cs",
-              "RelativeDocumentMoniker": "e-commercial\\Models\\User.cs",
-              "ToolTip": "D:\\Backend Projects\\e-commercial\\e-commercial\\Models\\User.cs",
-              "RelativeToolTip": "e-commercial\\Models\\User.cs",
-              "ViewState": "AgIAAAUAAAAAAAAAAAAAAA4AAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-15T08:31:14.359Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 7,
-              "Title": "ManufacturerRepository.cs",
-              "DocumentMoniker": "D:\\Backend Projects\\e-commercial\\e-commercial\\Repositories\\ManufacturerRepository.cs",
-              "RelativeDocumentMoniker": "e-commercial\\Repositories\\ManufacturerRepository.cs",
-              "ToolTip": "D:\\Backend Projects\\e-commercial\\e-commercial\\Repositories\\ManufacturerRepository.cs",
-              "RelativeToolTip": "e-commercial\\Repositories\\ManufacturerRepository.cs",
-              "ViewState": "AgIAADMAAAAAAAAAAAAAAEMAAAAJAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-15T08:24:08.519Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 11,
-              "Title": "EmployeeRepository.cs",
-              "DocumentMoniker": "D:\\Backend Projects\\e-commercial\\e-commercial\\Repositories\\EmployeeRepository.cs",
-              "RelativeDocumentMoniker": "e-commercial\\Repositories\\EmployeeRepository.cs",
-              "ToolTip": "D:\\Backend Projects\\e-commercial\\e-commercial\\Repositories\\EmployeeRepository.cs",
-              "RelativeToolTip": "e-commercial\\Repositories\\EmployeeRepository.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAADAAAAANAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-15T08:23:00.987Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 12,
-              "Title": "Employee.cs",
-              "DocumentMoniker": "D:\\Backend Projects\\e-commercial\\e-commercial\\Models\\Employee.cs",
-              "RelativeDocumentMoniker": "e-commercial\\Models\\Employee.cs",
-              "ToolTip": "D:\\Backend Projects\\e-commercial\\e-commercial\\Models\\Employee.cs",
-              "RelativeToolTip": "e-commercial\\Models\\Employee.cs",
-              "ViewState": "AgIAAAcAAAAAAAAAAAAAAA8AAAAtAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-15T08:11:57.773Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "LaptopService.cs",
-              "DocumentMoniker": "D:\\Backend Projects\\e-commercial\\e-commercial\\Services\\LaptopService.cs",
-              "RelativeDocumentMoniker": "e-commercial\\Services\\LaptopService.cs",
-              "ToolTip": "D:\\Backend Projects\\e-commercial\\e-commercial\\Services\\LaptopService.cs",
-              "RelativeToolTip": "e-commercial\\Services\\LaptopService.cs",
-              "ViewState": "AgIAAFwAAAAAAAAAAAAAAG4AAAApAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-15T07:15:27.63Z",
+              "WhenOpened": "2025-07-17T14:08:02.92Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "LaptopCreateDTO.cs",
-              "DocumentMoniker": "D:\\Backend Projects\\e-commercial\\e-commercial\\DTOs\\Request\\Laptop\\LaptopCreateDTO.cs",
-              "RelativeDocumentMoniker": "e-commercial\\DTOs\\Request\\Laptop\\LaptopCreateDTO.cs",
-              "ToolTip": "D:\\Backend Projects\\e-commercial\\e-commercial\\DTOs\\Request\\Laptop\\LaptopCreateDTO.cs",
-              "RelativeToolTip": "e-commercial\\DTOs\\Request\\Laptop\\LaptopCreateDTO.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAASAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-15T09:07:35.992Z"
+              "DocumentIndex": 2,
+              "Title": "appsettings.json",
+              "DocumentMoniker": "D:\\Backend Projects\\reagvn\\e-commercial\\e-commercial\\appsettings.json",
+              "RelativeDocumentMoniker": "e-commercial\\appsettings.json",
+              "ToolTip": "D:\\Backend Projects\\reagvn\\e-commercial\\e-commercial\\appsettings.json",
+              "RelativeToolTip": "e-commercial\\appsettings.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAAAmAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2025-07-18T02:14:44.865Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 13,
-              "Title": "IEmployeeRepository.cs",
-              "DocumentMoniker": "D:\\Backend Projects\\e-commercial\\e-commercial\\Repositories\\Interfaces\\IEmployeeRepository.cs",
-              "RelativeDocumentMoniker": "e-commercial\\Repositories\\Interfaces\\IEmployeeRepository.cs",
-              "ToolTip": "D:\\Backend Projects\\e-commercial\\e-commercial\\Repositories\\Interfaces\\IEmployeeRepository.cs",
-              "RelativeToolTip": "e-commercial\\Repositories\\Interfaces\\IEmployeeRepository.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAqwAsAAAAlAAAAAAAAAA==",
+              "DocumentIndex": 8,
+              "Title": "BadValidationException.cs",
+              "DocumentMoniker": "D:\\Backend Projects\\reagvn\\e-commercial\\e-commercial\\Exceptions\\BadValidationException.cs",
+              "RelativeDocumentMoniker": "e-commercial\\Exceptions\\BadValidationException.cs",
+              "ToolTip": "D:\\Backend Projects\\reagvn\\e-commercial\\e-commercial\\Exceptions\\BadValidationException.cs",
+              "RelativeToolTip": "e-commercial\\Exceptions\\BadValidationException.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAAAPAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-15T08:11:49.032Z"
+              "WhenOpened": "2025-07-21T13:14:07.079Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "Branch.cs",
-              "DocumentMoniker": "D:\\Backend Projects\\e-commercial\\e-commercial\\Models\\Branch.cs",
-              "RelativeDocumentMoniker": "e-commercial\\Models\\Branch.cs",
-              "ToolTip": "D:\\Backend Projects\\e-commercial\\e-commercial\\Models\\Branch.cs",
-              "RelativeToolTip": "e-commercial\\Models\\Branch.cs",
-              "ViewState": "AgIAAAUAAAAAAAAAAAAqwAwAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-14T09:11:15.026Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 16,
-              "Title": "EmployeeCreateDTO.cs",
-              "DocumentMoniker": "D:\\Backend Projects\\e-commercial\\e-commercial\\DTOs\\Request\\EmployeeCreateDTO.cs",
-              "RelativeDocumentMoniker": "e-commercial\\DTOs\\Request\\EmployeeCreateDTO.cs",
-              "ToolTip": "D:\\Backend Projects\\e-commercial\\e-commercial\\DTOs\\Request\\EmployeeCreateDTO.cs",
-              "RelativeToolTip": "e-commercial\\DTOs\\Request\\EmployeeCreateDTO.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAASAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-15T08:12:32.202Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 17,
-              "Title": "Department.cs",
-              "DocumentMoniker": "D:\\Backend Projects\\e-commercial\\e-commercial\\Models\\Department.cs",
-              "RelativeDocumentMoniker": "e-commercial\\Models\\Department.cs",
-              "ToolTip": "D:\\Backend Projects\\e-commercial\\e-commercial\\Models\\Department.cs",
-              "RelativeToolTip": "e-commercial\\Models\\Department.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-15T07:18:21.596Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 9,
-              "Title": "IBranchRepository.cs",
-              "DocumentMoniker": "D:\\Backend Projects\\e-commercial\\e-commercial\\Repositories\\Interfaces\\IBranchRepository.cs",
-              "RelativeDocumentMoniker": "e-commercial\\Repositories\\Interfaces\\IBranchRepository.cs",
-              "ToolTip": "D:\\Backend Projects\\e-commercial\\e-commercial\\Repositories\\Interfaces\\IBranchRepository.cs",
-              "RelativeToolTip": "e-commercial\\Repositories\\Interfaces\\IBranchRepository.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAjAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-15T07:16:36.271Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 18,
-              "Title": "DepartmentRepository.cs",
-              "DocumentMoniker": "D:\\Backend Projects\\e-commercial\\e-commercial\\Repositories\\DepartmentRepository.cs",
-              "RelativeDocumentMoniker": "e-commercial\\Repositories\\DepartmentRepository.cs",
-              "ToolTip": "D:\\Backend Projects\\e-commercial\\e-commercial\\Repositories\\DepartmentRepository.cs",
-              "RelativeToolTip": "e-commercial\\Repositories\\DepartmentRepository.cs",
-              "ViewState": "AgIAACQAAAAAAAAAAAAAABgAAAAjAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-15T07:19:16.294Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 15,
-              "Title": "IDepartmenRepository.cs",
-              "DocumentMoniker": "D:\\Backend Projects\\e-commercial\\e-commercial\\Repositories\\Interfaces\\IDepartmenRepository.cs",
-              "RelativeDocumentMoniker": "e-commercial\\Repositories\\Interfaces\\IDepartmenRepository.cs",
-              "ToolTip": "D:\\Backend Projects\\e-commercial\\e-commercial\\Repositories\\Interfaces\\IDepartmenRepository.cs",
-              "RelativeToolTip": "e-commercial\\Repositories\\Interfaces\\IDepartmenRepository.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAAEAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-15T07:16:32.456Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 14,
-              "Title": "BranchRepository.cs",
-              "DocumentMoniker": "D:\\Backend Projects\\e-commercial\\e-commercial\\Repositories\\BranchRepository.cs",
-              "RelativeDocumentMoniker": "e-commercial\\Repositories\\BranchRepository.cs",
-              "ToolTip": "D:\\Backend Projects\\e-commercial\\e-commercial\\Repositories\\BranchRepository.cs",
-              "RelativeToolTip": "e-commercial\\Repositories\\BranchRepository.cs",
-              "ViewState": "AgIAAAkAAAAAAAAAAAAAADkAAAAgAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-14T09:12:58.783Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 19,
-              "Title": "CategoryRepository.cs",
-              "DocumentMoniker": "D:\\Backend Projects\\e-commercial\\e-commercial\\Repositories\\CategoryRepository.cs",
-              "RelativeDocumentMoniker": "e-commercial\\Repositories\\CategoryRepository.cs",
-              "ToolTip": "D:\\Backend Projects\\e-commercial\\e-commercial\\Repositories\\CategoryRepository.cs",
-              "RelativeToolTip": "e-commercial\\Repositories\\CategoryRepository.cs",
-              "ViewState": "AgIAADMAAAAAAAAAAAAAAEMAAAAJAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-15T07:20:57.765Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 20,
-              "Title": "DepartmentCreateDTO.cs",
-              "DocumentMoniker": "D:\\Backend Projects\\e-commercial\\e-commercial\\DTOs\\Request\\DepartmentCreateDTO.cs",
-              "RelativeDocumentMoniker": "e-commercial\\DTOs\\Request\\DepartmentCreateDTO.cs",
-              "ToolTip": "D:\\Backend Projects\\e-commercial\\e-commercial\\DTOs\\Request\\DepartmentCreateDTO.cs",
-              "RelativeToolTip": "e-commercial\\DTOs\\Request\\DepartmentCreateDTO.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAAAFAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-15T07:18:18.116Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 21,
-              "Title": "BranchCreateDTO.cs",
-              "DocumentMoniker": "D:\\Backend Projects\\e-commercial\\e-commercial\\DTOs\\Request\\BranchCreateDTO.cs",
-              "RelativeDocumentMoniker": "e-commercial\\DTOs\\Request\\BranchCreateDTO.cs",
-              "ToolTip": "D:\\Backend Projects\\e-commercial\\e-commercial\\DTOs\\Request\\BranchCreateDTO.cs",
-              "RelativeToolTip": "e-commercial\\DTOs\\Request\\BranchCreateDTO.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-15T07:18:31.324Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 22,
+              "DocumentIndex": 3,
               "Title": "Program.cs",
-              "DocumentMoniker": "D:\\Backend Projects\\e-commercial\\e-commercial\\Program.cs",
+              "DocumentMoniker": "D:\\Backend Projects\\reagvn\\e-commercial\\e-commercial\\Program.cs",
               "RelativeDocumentMoniker": "e-commercial\\Program.cs",
-              "ToolTip": "D:\\Backend Projects\\e-commercial\\e-commercial\\Program.cs",
+              "ToolTip": "D:\\Backend Projects\\reagvn\\e-commercial\\e-commercial\\Program.cs",
               "RelativeToolTip": "e-commercial\\Program.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABMAAABCAAAAAAAAAA==",
+              "ViewState": "AgIAABAAAAAAAAAAAAAnwBkAAAApAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-12T05:14:24.531Z"
+              "WhenOpened": "2025-07-12T05:14:24.531Z",
+              "EditorCaption": ""
             }
           ]
         }

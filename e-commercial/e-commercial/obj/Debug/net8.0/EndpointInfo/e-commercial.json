@@ -66,6 +66,27 @@
             "description": "OK"
           }
         }
+      },
+      "delete": {
+        "tags": [
+          "Laptop"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
       }
     },
     "/api/Laptop": {
@@ -98,6 +119,68 @@
             "application/*+json": {
               "schema": {
                 "$ref": "#/components/schemas/LaptopCreateDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/User/register": {
+      "post": {
+        "tags": [
+          "User"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserCreateDTO"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserCreateDTO"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserCreateDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/User/login": {
+      "post": {
+        "tags": [
+          "User"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserLoginDTO"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserLoginDTO"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserLoginDTO"
               }
             }
           }
@@ -192,6 +275,80 @@
           "manufacturerId": {
             "type": "string",
             "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "UserCreateDTO": {
+        "required": [
+          "userAddress",
+          "userDistrict",
+          "username",
+          "userpassword",
+          "userPhone",
+          "userShownname",
+          "userWard"
+        ],
+        "type": "object",
+        "properties": {
+          "username": {
+            "maxLength": 255,
+            "minLength": 0,
+            "type": "string"
+          },
+          "userpassword": {
+            "maxLength": 255,
+            "minLength": 0,
+            "type": "string"
+          },
+          "userShownname": {
+            "maxLength": 255,
+            "minLength": 0,
+            "type": "string"
+          },
+          "userDistrict": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "userWard": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "userAddress": {
+            "maxLength": 255,
+            "minLength": 0,
+            "type": "string"
+          },
+          "userPhone": {
+            "maxLength": 255,
+            "minLength": 0,
+            "type": "string"
+          },
+          "userEmail": {
+            "maxLength": 255,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "UserLoginDTO": {
+        "required": [
+          "username",
+          "userpassword"
+        ],
+        "type": "object",
+        "properties": {
+          "username": {
+            "maxLength": 255,
+            "minLength": 0,
+            "type": "string"
+          },
+          "userpassword": {
+            "maxLength": 255,
+            "minLength": 0,
+            "type": "string"
           }
         },
         "additionalProperties": false

@@ -58,7 +58,7 @@ namespace e_commercial.Controllers
         {
             try
             {
-                _laptopService.Re(id);
+                _laptopService.DeleteLaptop(id);
                 return NoContent();
             }
             catch (ArgumentException ex)

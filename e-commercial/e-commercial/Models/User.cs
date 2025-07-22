@@ -21,5 +21,17 @@ public partial class User
 
     public string? UpdatedBy { get; set; }
 
+    public string? UserShownname { get; set; }
+
+    public string? UserDistrict { get; set; }
+
+    public string? UserWard { get; set; }
+
+    public string? UserAddress { get; set; }
+
+    public string? UserPhone { get; set; }
+
+    public string? UserEmail { get; set; }
+
     public virtual ICollection<Branch> Branches { get; set; } = new List<Branch>();
 }

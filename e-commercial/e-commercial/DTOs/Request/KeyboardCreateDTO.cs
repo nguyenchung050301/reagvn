@@ -8,9 +8,11 @@ namespace e_commercial.DTOs.Request
         [Required]
         [StringLength(255)]
         public string? KeyboardName { get; set; }
+        
         [Required]
         [StringLength(255)]
         public string? KeyboardSwitch { get; set; }
+
         [StringLength(255)]
         public string? KeyboardDescription { get; set; }
 

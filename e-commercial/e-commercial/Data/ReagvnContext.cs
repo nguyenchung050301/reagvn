@@ -363,11 +363,33 @@ public partial class ReagvnContext : DbContext
             entity.Property(e => e.UpdatedBy)
                 .HasMaxLength(36)
                 .HasColumnName("updated_by");
+            entity.Property(e => e.UserAddress)
+                .HasMaxLength(255)
+                .HasColumnName("user_address")
+                .UseCollation("utf8mb3_general_ci")
+                .HasCharSet("utf8mb3");
+            entity.Property(e => e.UserDistrict)
+                .HasMaxLength(255)
+                .HasColumnName("user_district");
+            entity.Property(e => e.UserEmail)
+                .HasMaxLength(255)
+                .HasColumnName("user_email");
+            entity.Property(e => e.UserPhone)
+                .HasMaxLength(12)
+                .HasColumnName("user_phone");
             entity.Property(e => e.UserRole)
                 .HasMaxLength(255)
                 .HasColumnName("user_role")
                 .UseCollation("utf8mb3_general_ci")
                 .HasCharSet("utf8mb3");
+            entity.Property(e => e.UserShownname)
+                .HasMaxLength(255)
+                .HasColumnName("user_shownname")
+                .UseCollation("utf8mb3_general_ci")
+                .HasCharSet("utf8mb3");
+            entity.Property(e => e.UserWard)
+                .HasMaxLength(255)
+                .HasColumnName("user_ward");
             entity.Property(e => e.Username)
                 .HasMaxLength(255)
                 .HasColumnName("username");

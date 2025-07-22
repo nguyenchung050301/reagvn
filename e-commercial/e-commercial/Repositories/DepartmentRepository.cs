@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace e_commercial.Repositories
 {
-    public class DepartmentRepository : IDepartmenRepository
+    public class DepartmentRepository : IDepartmentRepository
     {
         private readonly ReagvnContext _context;
         private readonly DbSet<Department> _dbSet;

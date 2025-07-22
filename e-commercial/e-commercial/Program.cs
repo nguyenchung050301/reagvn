@@ -18,8 +18,12 @@ builder.Services.AddScoped<IKeyboardRepository, KeyboardRepository>();
 builder.Services.AddScoped<IManufacturerRepository, ManufacturerRepository>();
 builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
 builder.Services.AddScoped<IBranchRepository, BranchRepository>();
+builder.Services.AddScoped<IEmployeeRepository, EmployeeRepository>();
+builder.Services.AddScoped<IDepartmentRepository, DepartmentRepository>();
+builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<LaptopService>();
-
+builder.Services.AddScoped<UserService>();
+builder.Services.AddScoped<JWTService>();
 builder.Services.AddDbContext<ReagvnContext>(options =>
     options.UseMySql(
         builder.Configuration.GetConnectionString("MySQLConnection"),

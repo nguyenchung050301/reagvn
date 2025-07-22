@@ -2,7 +2,7 @@
 
 namespace e_commercial.Repositories.Interfaces
 {
-    public interface IDepartmenRepository
+    public interface IDepartmentRepository
     {
         Department GetByID(Guid id);
         IEnumerable<Department> GetAll();
