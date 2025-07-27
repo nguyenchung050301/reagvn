@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace e_commercial.Controllers
 {
+
     [Route("api/[controller]")]
     [ApiController]
     public class LaptopController : ControllerBase

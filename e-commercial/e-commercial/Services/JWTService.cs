@@ -17,6 +17,7 @@ namespace e_commercial.Services
         private readonly SigningCredentials creds;
         private readonly JwtSecurityTokenHandler tokenHandler;
         private readonly RsaSecurityKey _privateKey;
+        private readonly SymmetricSecurityKey _privateKey2;
         private readonly RSA _rsa;
         private double dateExpire;
         public JWTService(IConfiguration configuration)
@@ -28,20 +29,23 @@ namespace e_commercial.Services
             dateExpire = double.Parse(getExpire != null ? getExpire : "1"); //thời gian hết hạn của token, lấy từ appsettings.json
             tokenHandler = new JwtSecurityTokenHandler();
 
-            //Load private key trong file
-            var privateKeyPath = _configuration["JWT:PrivateKeyPath"];
-            _rsa = RSA.Create();
-            _rsa.ImportFromPem(File.ReadAllText(privateKeyPath).ToCharArray()); //doc file vaf chuyen thanh char array
-            _privateKey = new RsaSecurityKey(_rsa); //tao RsaSecurityKey tu RSA
+            _privateKey2 = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JWT:Key"])); //lấy chuỗi bí mật từ appsettings.json và tạo RsaSecurityKey
 
-            creds = new SigningCredentials(_privateKey, SecurityAlgorithms.RsaSha256);
+
+            /*    //Load private key trong file
+                var privateKeyPath = _configuration["JWT:PrivateKeyPath"];
+                _rsa = RSA.Create();
+                _rsa.ImportFromPem(File.ReadAllText(privateKeyPath).ToCharArray()); //doc file vaf chuyen thanh char array
+                _privateKey = new RsaSecurityKey(_rsa); //tao RsaSecurityKey tu RSA*/
+
+            creds = new SigningCredentials(_privateKey2, SecurityAlgorithms.HmacSha256);
         }
         public string GenerateToken(User user)
         {
             var claims = new[]
             {
-                new Claim(ClaimTypes.Name, user.Username), //nhúng data vào token với kiểu claimtype
-                new Claim(ClaimTypes.Role, user.UserRole), //cần xem lại chỗ này
+                new Claim(JwtRegisteredClaimNames.Sub, user.UserId), //nhúng data vào token với kiểu claimtype
+                new Claim(JwtRegisteredClaimNames.Email, user.UserEmail), //cần xem lại chỗ này
             };
 
            
@@ -54,7 +58,8 @@ namespace e_commercial.Services
            //     audience: _configuration["Jwt:Audience"], //đối tượng sử dụng token
                 claims: claims, //các claim đã định nghĩa ở trên
                 expires: DateTime.UtcNow.AddDays(dateExpire), //thời gian hết hạn của token
-                signingCredentials: creds //các thông tin ký token
+                signingCredentials: creds, //các thông tin ký token
+
                 );
           
             /*if (token == null)
@@ -75,7 +80,7 @@ namespace e_commercial.Services
         {
             var token = (JwtSecurityToken)tokenHandler.ReadToken(_token);
             Console.WriteLine("Token: " + token);
-            return null;
+            return token.ToString();
         }
         public JwtSecurityTokenHandler GetJwtSecurityTokenHandler()
         {

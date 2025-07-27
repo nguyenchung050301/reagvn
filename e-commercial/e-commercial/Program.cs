@@ -9,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Security.Cryptography;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -38,8 +39,24 @@ builder.Services.AddDbContext<ReagvnContext>(options =>
         ServerVersion.AutoDetect(builder.Configuration.GetConnectionString("MySQLConnection"))
     )
 );
-builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddScheme<AuthenticationSchemeOptions, 
-    MyAppAuthenticationHandler>(JwtBearerDefaults.AuthenticationScheme, (opt) => { });
+//builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddScheme<AuthenticationSchemeOptions, 
+ //   MyAppAuthenticationHandler>(JwtBearerDefaults.AuthenticationScheme, (opt) => { });
+
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
+{
+    options.TokenValidationParameters = new TokenValidationParameters
+    {
+        /*ValidIssuer = builder.Configuration["Jwt:Issuer"],
+        ValidAudience = builder.Configuration["Jwt:Audience"],
+        ValidateIssuer = true,
+        ValidateAudience = true,
+        ValidateLifetime = true,*/
+     //   IssuerSigningKey = new RsaSecurityKey(RSA.Create()),
+     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JWT:Key"])),
+        ValidateIssuerSigningKey = true,
+       
+    };
+});
 
 builder.Services.AddAuthorization();
 

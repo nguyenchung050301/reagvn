@@ -31,9 +31,12 @@ namespace e_commercial.Middleware
         /// <returns></returns>
         protected override Task<AuthenticateResult> HandleAuthenticateAsync()
         {          
-            var getTokenHandler = _jWTService.GetJwtSecurityTokenHandler();
-            _jWTService.GetJwtSecurityToken(Context.Request.Headers["Authorization"]);
+
+            var getTokenHandler = _jWTService.GetJwtSecurityTokenHandler(); 
+             //  _jWTService.GetJwtSecurityToken(Request.Headers["Authorization"]);
+
             // Implement your authentication logic here
+            Console.WriteLine(Request.Headers["Authorization"]);
             Console.WriteLine("MyAppAuthenticationHandler: HandleAuthenticateAsync called");
             return Task.FromResult(AuthenticateResult.NoResult());
         }
