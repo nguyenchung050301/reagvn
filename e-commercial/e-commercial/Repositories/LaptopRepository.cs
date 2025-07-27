@@ -1,5 +1,8 @@
 ﻿using e_commercial.Data;
 using e_commercial.DTOs.Request;
+using e_commercial.DTOs.Request.Pagination;
+using e_commercial.DTOs.Response.Pagination;
+using e_commercial.Exceptions;
 using e_commercial.Models;
 using e_commercial.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
@@ -39,19 +42,38 @@ namespace e_commercial.Repositories
 
         public Laptop GetByID(Guid id)
         {
-            if (id == Guid.Empty)
-            {
-                throw new ArgumentException("ID cannot be empty.", nameof(id));
-            }
+           
             Laptop laptop = _dbSet
                 .Include(p => p.Category)
                 .Include(p => p.Manufacturer)
                 .FirstOrDefault(p => p.LaptopId == id.ToString());
-            if (laptop == null)
-            {
-                throw new KeyNotFoundException($"Laptop with ID {id} not found.");
-            }
+          
             return laptop;
+        }
+
+        public (IQueryable<Laptop>,int) GetPagination(int pageNumber, int pageSize, string? name)
+        {
+            // var query = _dbSet
+            //   .Include(p => p.Category)
+            //   .Include(p => p.Manufacturer)
+            //    .AsQueryable(); //convert Ienumerable to IQueryable 
+            var query = SearchByName(name);
+            int totalCount = query.Count();
+            int totalPages = (int)Math.Ceiling((double)totalCount / pageSize);  
+
+            var items  = query.Skip(pageSize * (pageNumber - 1)).
+                OrderByDescending(p => p.LaptopName).Take(pageSize);
+            return (items, totalCount);
+           
+        }
+
+        public IQueryable<Laptop> SearchByName(string? name)
+        {
+            if (string.IsNullOrWhiteSpace(name))
+            {
+                return _dbSet.AsQueryable();
+            }
+            return _dbSet.Where(p => p.LaptopName.Contains(name)).OrderBy(p => p.LaptopName); ;
         }
 
         public void Update(Laptop laptop)

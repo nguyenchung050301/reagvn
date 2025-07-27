@@ -1,9 +1,14 @@
 using e_commercial.Data;
+using e_commercial.Middleware;
 using e_commercial.Repositories;
 using e_commercial.Repositories.Interfaces;
 using e_commercial.Services;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using System;
+using System.Security.Cryptography;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,15 +26,23 @@ builder.Services.AddScoped<IBranchRepository, BranchRepository>();
 builder.Services.AddScoped<IEmployeeRepository, EmployeeRepository>();
 builder.Services.AddScoped<IDepartmentRepository, DepartmentRepository>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IRefreshTokenRepository, RefreshTokenRepository>();
 builder.Services.AddScoped<LaptopService>();
 builder.Services.AddScoped<UserService>();
 builder.Services.AddScoped<JWTService>();
+builder.Services.AddScoped<RefreshTokenService>();
+builder.Services.AddScoped<KeyboardServicce>();
 builder.Services.AddDbContext<ReagvnContext>(options =>
     options.UseMySql(
         builder.Configuration.GetConnectionString("MySQLConnection"),
         ServerVersion.AutoDetect(builder.Configuration.GetConnectionString("MySQLConnection"))
     )
 );
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddScheme<AuthenticationSchemeOptions, 
+    MyAppAuthenticationHandler>(JwtBearerDefaults.AuthenticationScheme, (opt) => { });
+
+builder.Services.AddAuthorization();
+
 var app = builder.Build();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -39,7 +52,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();

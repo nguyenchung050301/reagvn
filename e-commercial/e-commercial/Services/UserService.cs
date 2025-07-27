@@ -16,6 +16,7 @@ namespace e_commercial.Services
         }
         public void Register(UserCreateDTO userDTO)
         {
+            //check register
             var existing = _userRepository.GetAll().FirstOrDefault(p => p.Username == userDTO.Username);
             if (existing != null)
             {
@@ -30,6 +31,7 @@ namespace e_commercial.Services
             {
                 throw new BadValidationException("Not a valid email format.", nameof(userDTO.UserEmail));
             }
+            //
             user.UserId = Guid.NewGuid().ToString();
             user.Username = userDTO.Username;
             string hashedPassword = hashPassword(userDTO.Userpassword);
@@ -43,8 +45,9 @@ namespace e_commercial.Services
             user.UserEmail = userDTO.UserEmail;
             _userRepository.Add(user); 
         }
-        public void Login(UserLoginDTO userDTO)
+        public User LoadByUserName(UserLoginDTO userDTO)
         {
+            //check login
             var check = _userRepository.GetAll().FirstOrDefault(p => p.Username == userDTO.Username);
             if (check == null)
             {
@@ -54,6 +57,7 @@ namespace e_commercial.Services
             {
                 throw new BadValidationException("Nhap sai tai khoan hoac mat khau", nameof(userDTO.Userpassword));
             }
+            return check;
         }
         private bool IsPhoneNumber(string num)
         {

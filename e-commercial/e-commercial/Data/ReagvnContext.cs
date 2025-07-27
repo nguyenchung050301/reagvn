@@ -31,6 +31,8 @@ public partial class ReagvnContext : DbContext
 
     public virtual DbSet<Manufacturer> Manufacturers { get; set; }
 
+    public virtual DbSet<Refreshtoken> Refreshtokens { get; set; }
+
     public virtual DbSet<User> Users { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -340,6 +342,35 @@ public partial class ReagvnContext : DbContext
             entity.Property(e => e.UpdatedBy)
                 .HasMaxLength(36)
                 .HasColumnName("updated_by");
+        });
+
+        modelBuilder.Entity<Refreshtoken>(entity =>
+        {
+            entity
+                .HasNoKey()
+                .ToTable("refreshtokens");
+
+            entity.HasIndex(e => e.UserId, "user_id");
+
+            entity.Property(e => e.CreatedAt).HasColumnType("datetime");
+            entity.Property(e => e.TokenExpires)
+                .HasColumnType("datetime")
+                .HasColumnName("token_expires");
+            entity.Property(e => e.TokenId)
+                .HasMaxLength(36)
+                .HasColumnName("token_id");
+            entity.Property(e => e.TokenIsrevoked).HasColumnName("token_isrevoked");
+            entity.Property(e => e.TokenIsused).HasColumnName("token_isused");
+            entity.Property(e => e.TokenValue)
+                .HasMaxLength(255)
+                .HasColumnName("token_value");
+            entity.Property(e => e.UserId)
+                .HasMaxLength(36)
+                .HasColumnName("user_id");
+
+            entity.HasOne(d => d.User).WithMany()
+                .HasForeignKey(d => d.UserId)
+                .HasConstraintName("refreshtokens_ibfk_1");
         });
 
         modelBuilder.Entity<User>(entity =>
