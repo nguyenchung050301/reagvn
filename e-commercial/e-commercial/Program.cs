@@ -41,20 +41,22 @@ builder.Services.AddDbContext<ReagvnContext>(options =>
 );
 //builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddScheme<AuthenticationSchemeOptions, 
  //   MyAppAuthenticationHandler>(JwtBearerDefaults.AuthenticationScheme, (opt) => { });
-
+var publicKey = builder.Configuration["JWT:PublicKeyPath"];
+using var rsa = RSA.Create();
+rsa.ImportFromPem(File.ReadAllText(publicKey).ToCharArray());
+var rsaKey = new RsaSecurityKey(rsa);
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
 {
     options.TokenValidationParameters = new TokenValidationParameters
     {
-        /*ValidIssuer = builder.Configuration["Jwt:Issuer"],
+        ValidIssuer = builder.Configuration["Jwt:Issuer"],
         ValidAudience = builder.Configuration["Jwt:Audience"],
         ValidateIssuer = true,
         ValidateAudience = true,
-        ValidateLifetime = true,*/
-     //   IssuerSigningKey = new RsaSecurityKey(RSA.Create()),
-     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JWT:Key"])),
+        ValidateLifetime = true,
+        IssuerSigningKey = rsaKey,    
         ValidateIssuerSigningKey = true,
-       
+        ClockSkew = TimeSpan.Zero, // Disable clock skew to ensure token expiration is precise
     };
 });
 
