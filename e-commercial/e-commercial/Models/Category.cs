@@ -1,4 +1,5 @@
-﻿using System;
+﻿using e_commercial.Models.Products;
+using System;
 using System.Collections.Generic;
 
 namespace e_commercial.Models;
