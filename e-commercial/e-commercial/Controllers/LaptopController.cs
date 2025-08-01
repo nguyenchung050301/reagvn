@@ -28,7 +28,7 @@ namespace e_commercial.Controllers
             return Ok(_laptopService.GetLaptopDetails(id));
         }
 
-        [Authorize]
+        [Authorize (Roles = RoleEnum.User)]
         [HttpGet]
         public IActionResult GetAll()
         {
@@ -104,20 +104,20 @@ namespace e_commercial.Controllers
                 throw new BadValidationException("Ko co san pham", nameof(ex)); 
             }
         }
+      /*  [HttpPost("AddToCart/{id}")]
 
-        [HttpGet("search")]
-        public IActionResult SearchByName([FromQuery] string name)
+        public IActionResult AddProductToCart(Guid id)
         {
             try
             {
-                return Ok(_laptopService.SearchByName(name));
+                _laptopService.AddProductToCart(id);
+                return Created();
             }
             catch (BadValidationException ex)
             {
-                throw new BadValidationException("Khong co san pham", nameof(ex));
+                throw new BadValidationException("Khong the them san pham vao gio hang", nameof(ex));
             }
-        }
-        
+        }*/
         private string GetHeaderAuthor()
         {
             if (Request.Headers.TryGetValue("Authorization", out var header))

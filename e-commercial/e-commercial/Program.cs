@@ -1,8 +1,10 @@
 using e_commercial.Data;
-using e_commercial.Middleware;
+using e_commercial.Models.Products;
 using e_commercial.Repositories;
 using e_commercial.Repositories.Interfaces;
 using e_commercial.Services;
+using e_commercial.Services.InterfaceService;
+using e_commercial.Services.ServiceFactory;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
@@ -28,11 +30,21 @@ builder.Services.AddScoped<IEmployeeRepository, EmployeeRepository>();
 builder.Services.AddScoped<IDepartmentRepository, DepartmentRepository>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IRefreshTokenRepository, RefreshTokenRepository>();
-builder.Services.AddScoped<LaptopService>();
+builder.Services.AddScoped<ICartRepository, CartRepository>();
+//builder.Services.AddScoped<LaptopService>();
 builder.Services.AddScoped<UserService>();
 builder.Services.AddScoped<JWTService>();
 builder.Services.AddScoped<RefreshTokenService>();
-builder.Services.AddScoped<KeyboardServicce>();
+//builder.Services.AddScoped<KeyboardServicce>();
+builder.Services.AddScoped<CartService>();
+builder.Services.AddScoped<IGenericCartProductService>( p => 
+{ 
+    var db = p.GetRequiredService<ReagvnContext>();
+    var cartService = p.GetRequiredService<CartService>();
+    return new GenericCartProductService<Laptop>(db, cartService,
+        laptop => (laptop.LaptopId.ToString(), laptop.Category.CategoryId ,(float)laptop.Price, (int)laptop.StockQuantity), "Laptop");
+});
+builder.Services.AddScoped<CartProductServiceFactory>();
 builder.Services.AddDbContext<ReagvnContext>(options =>
     options.UseMySql(
         builder.Configuration.GetConnectionString("MySQLConnection"),

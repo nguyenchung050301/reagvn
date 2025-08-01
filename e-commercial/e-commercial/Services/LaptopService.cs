@@ -1,4 +1,5 @@
-﻿using e_commercial.DTOs.Request.Laptop;
+﻿using e_commercial.DTOs.Request.Cart;
+using e_commercial.DTOs.Request.Laptop;
 using e_commercial.DTOs.Request.Pagination;
 using e_commercial.DTOs.Response.Laptop;
 using e_commercial.DTOs.Response.Pagination;
@@ -13,17 +14,21 @@ namespace e_commercial.Services
 {
     public class LaptopService
     {
+        private readonly string productType = "Laptop";
         private readonly ILaptopRepository _laptopRepository;
         private readonly ICategoryRepository _categoryRepository;
         private readonly IManufacturerRepository _manufacturerRepository;
         private readonly JWTService _jwtService;
-        public LaptopService(JWTService jWTService, ILaptopRepository laptopRepository, ICategoryRepository categoryRepository,
-            IManufacturerRepository manufacturerRepository)
+        private readonly CartService _cartService;
+
+        public LaptopService(ILaptopRepository laptopRepository, ICategoryRepository categoryRepository,
+            IManufacturerRepository manufacturerRepository, CartService cartService, JWTService jwtService)
         {
-            _jwtService = jWTService;
             _laptopRepository = laptopRepository;
             _categoryRepository = categoryRepository;
-            _manufacturerRepository = manufacturerRepository;   
+            _manufacturerRepository = manufacturerRepository;
+            _cartService = cartService;
+            _jwtService = jwtService;
         }
         public LaptopDetailDTO GetLaptopDetails(Guid id)
         {
@@ -170,27 +175,34 @@ namespace e_commercial.Services
             };
 
         }
-
-        //Module đơn giản (ko link vào pagination)
-        public IEnumerable<LaptopItemDTO> SearchByName(string name)
+        public void AddProductToCart(Guid id)
         {
-            if (string.IsNullOrEmpty(name))
+            if (id == Guid.Empty)
             {
-                throw new BadValidationException("Name cannot be null or empty.", nameof(name));
+                throw new BadValidationException("Product ID cannot be empty.", nameof(id));
             }
 
-            var search = _laptopRepository.SearchByName(name);
-             
-           
-
-            return search.Select(p => new LaptopItemDTO
+            var existingProduct = _laptopRepository.GetByID(id);
+            new CartAddProductDTO
             {
-                Id = p.LaptopId,
-                Name = p.LaptopName,
-            }).ToList();
+                ProductId = existingProduct.LaptopId,
+                ProductType = productType,
+                Quantity = 1, // Assuming default quantity is 1 when adding to cart
+                UnitPrice = (float)existingProduct.Price
+            };
 
-
+            _cartService.AddToCart(new Cart
+            {
+                CartId = Guid.NewGuid().ToString(),
+                ProductId = existingProduct.LaptopId.ToString(),
+                ProductType = productType,
+                Quantity = 1, // Assuming default quantity is 1 when adding to cart
+                UnitPrice = (float)existingProduct.Price
+            });
         }
+
+
+
 
     }
 }

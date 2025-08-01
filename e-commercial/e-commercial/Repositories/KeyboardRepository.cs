@@ -2,7 +2,7 @@
 using e_commercial.DTOs.Request;
 using e_commercial.DTOs.Request.Pagination;
 using e_commercial.DTOs.Response.Pagination;
-using e_commercial.Models;
+using e_commercial.Models.Products;
 using e_commercial.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
 

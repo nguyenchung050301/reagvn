@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace e_commercial.Models;
+namespace e_commercial.Models.Products;
 
 public partial class Keyboard
 {
@@ -26,6 +26,10 @@ public partial class Keyboard
     public string? CreatedBy { get; set; }
 
     public string? UpdatedBy { get; set; }
+
+    public int? StockQuantity { get; set; }
+
+    public float? Price { get; set; }
 
     public virtual Category Category { get; set; } = null!;
 
