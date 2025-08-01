@@ -37,33 +37,6 @@ namespace e_commercial.Controllers
 
             }
         }
-        /// <summary>
-        /// dang nhap: nhan object co 2 field username va password
-        /// tim kiem username trong database trong table users, neu ko tim thay tra badvalidation voi message "username hoawc pass sai" (moi case)
-        /// Neu tim thay thi kiem tra password bang cach su dung bcrypt.verify
-        /// Neu verify = false tra ve message badvalidation
-        /// Neu login thanh cong, tra ve JWT token vaf mot so thong tin di kem
-        /// </summary>
-        /// <returns></returns>
-        [HttpPost("login")] 
-        public IActionResult Login(UserLoginDTO userDTO)
-        {
-            try
-            {
-                var token = _jwtService.GenerateToken(userDTO.Username, RoleEnum.User);
-                _userService.Login(userDTO);
-                return Ok(new
-                {
-                    token = token,
-                    message = "Login successful",
-                    username = userDTO.Username,
-                    role = RoleEnum.User,
-                });
-            }
-            catch (BadValidationException ex)
-            {
-                return BadRequest(ex.Message);
-            }
-        }
+      
     }
 }

@@ -1,4 +1,6 @@
 ﻿using e_commercial.DTOs.Request;
+using e_commercial.DTOs.Request.Pagination;
+using e_commercial.DTOs.Response.Pagination;
 using e_commercial.Models;
 
 namespace e_commercial.Repositories.Interfaces
@@ -10,5 +12,6 @@ namespace e_commercial.Repositories.Interfaces
         void Add(Keyboard keyboard);
         void Update(Keyboard keyboard);
         void Delete(Guid id);
+        PaginationResponseDTO<Keyboard> GetPagination(PaginationRequestDTO requestDTO);
     }
 }

@@ -1,5 +1,7 @@
 ﻿using e_commercial.Data;
 using e_commercial.DTOs.Request;
+using e_commercial.DTOs.Request.Pagination;
+using e_commercial.DTOs.Response.Pagination;
 using e_commercial.Models;
 using e_commercial.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
@@ -56,6 +58,24 @@ namespace e_commercial.Repositories
             }
 
             return keyboard;
+        }
+
+        public PaginationResponseDTO<Keyboard> GetPagination(PaginationRequestDTO requestDTO)
+        {
+            var query = _dbSet.AsQueryable();
+            int totalCount = query.Count();
+            int totalPages = (int)Math.Ceiling((double)totalCount / requestDTO.PageSize);
+            var items = query.Skip(requestDTO.PageSize * (requestDTO.PageNumber - 1)).
+                OrderByDescending(p => p.KeyboardName).Take(requestDTO.PageSize).ToList();
+
+            return new PaginationResponseDTO<Keyboard>
+            {
+                CurrentPage = requestDTO.PageNumber,
+                PageSize = requestDTO.PageSize,
+                TotalCount = totalCount,
+                TotalPages = totalPages,
+                Items = items
+            };
         }
 
         public void Update(Keyboard keyboard)
