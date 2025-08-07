@@ -23,7 +23,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="DTOs\Response\Cart\" />
+    <Folder Include="DTOs\Request\Cart\" />
+    <Folder Include="DTOs\Request\OrderDetail\" />
+    <Folder Include="Services\InterfaceService\" />
   </ItemGroup>
 
 </Project>

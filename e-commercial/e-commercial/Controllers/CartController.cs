@@ -1,9 +1,12 @@
-﻿using e_commercial.Services;
+﻿using e_commercial.DTOs.Request.Order;
+using e_commercial.Services;
 using e_commercial.Services.ServiceFactory;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace e_commercial.Controllers
 {
+  /*  [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class CartController : Controller
@@ -21,19 +24,6 @@ namespace e_commercial.Controllers
             return Ok(_cartService.ShowAllCarts());
         }
 
-        [HttpPost("AddToCart")]
-        public IActionResult AddToCart([FromBody] Guid id, [FromBody] string type)
-        {
-            try
-            {
-                
-                _cartProductServiceFactory.GetService(type).AddProductToCart(id); //type dang sai
-                return Created("", null);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
-        }
-    }
+      
+    }*/
 }

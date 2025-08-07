@@ -1,4 +1,4 @@
-﻿using e_commercial.DTOs.Request.Cart;
+﻿
 using e_commercial.DTOs.Request.Laptop;
 using e_commercial.DTOs.Request.Pagination;
 using e_commercial.DTOs.Response.Laptop;
@@ -19,15 +19,15 @@ namespace e_commercial.Services
         private readonly ICategoryRepository _categoryRepository;
         private readonly IManufacturerRepository _manufacturerRepository;
         private readonly JWTService _jwtService;
-        private readonly CartService _cartService;
+      //  private readonly CartService _cartService;
 
         public LaptopService(ILaptopRepository laptopRepository, ICategoryRepository categoryRepository,
-            IManufacturerRepository manufacturerRepository, CartService cartService, JWTService jwtService)
+            IManufacturerRepository manufacturerRepository, JWTService jwtService)
         {
             _laptopRepository = laptopRepository;
             _categoryRepository = categoryRepository;
             _manufacturerRepository = manufacturerRepository;
-            _cartService = cartService;
+         //   _cartService = cartService;
             _jwtService = jwtService;
         }
         public LaptopDetailDTO GetLaptopDetails(Guid id)
@@ -117,20 +117,20 @@ namespace e_commercial.Services
             {
                 throw new ArgumentNullException("Id cannot be null.");
             }
-            var laptop = _laptopRepository.GetByID(Id);
-            if (laptop == null)
+            var existing = _laptopRepository.GetByID(Id);
+            if (existing == null)
             {
                 throw new ArgumentNullException("Laptop not found.");
             }
-            laptop.LaptopName = laptopUpdateDTO.LaptopName;
-            laptop.LaptopSize = laptopUpdateDTO.LaptopSize;
-            laptop.LaptopDescription = laptopUpdateDTO.LaptopDescription;
-            laptop.LaptopImage = JsonSerializer.Serialize(laptopUpdateDTO.LaptopImage);
-            laptop.CategoryId = laptopUpdateDTO.CategoryId;
-            laptop.ManufacturerId = laptopUpdateDTO.ManufacturerId;
-            laptop.UpdatedAt = DateTime.UtcNow;
-            laptop.UpdatedBy = "System"; // This should be replaced with the actual user ID or name
-            _laptopRepository.Update(laptop);
+            existing.LaptopName = laptopUpdateDTO.LaptopName;
+            existing.LaptopSize = laptopUpdateDTO.LaptopSize;
+            existing.LaptopDescription = laptopUpdateDTO.LaptopDescription;
+            existing.LaptopImage = JsonSerializer.Serialize(laptopUpdateDTO.LaptopImage);
+            existing.CategoryId = laptopUpdateDTO.CategoryId;
+            existing.ManufacturerId = laptopUpdateDTO.ManufacturerId;
+            existing.UpdatedAt = DateTime.UtcNow;
+            existing.UpdatedBy = "System"; // This should be replaced with the actual user ID or name
+            _laptopRepository.Update(existing);
         }
         public void DeleteLaptop(Guid id)
         {
@@ -145,6 +145,7 @@ namespace e_commercial.Services
             }
             _laptopRepository.Delete(laptop);
         }
+
         public PaginationResponseDTO<LaptopItemDTO> GetPagination(PaginationRequestDTO requestDTO, string? name)
         {           
        /*     if (requestDTO.PageNumber < 1)
@@ -175,7 +176,7 @@ namespace e_commercial.Services
             };
 
         }
-        public void AddProductToCart(Guid id)
+      /*  public void AddProductToCart(Guid id)
         {
             if (id == Guid.Empty)
             {
@@ -199,7 +200,7 @@ namespace e_commercial.Services
                 Quantity = 1, // Assuming default quantity is 1 when adding to cart
                 UnitPrice = (float)existingProduct.Price
             });
-        }
+        }*/
 
 
 

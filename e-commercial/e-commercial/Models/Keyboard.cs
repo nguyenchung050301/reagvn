@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace e_commercial.Models.Products;
+namespace e_commercial.Models;
 
 public partial class Keyboard
 {

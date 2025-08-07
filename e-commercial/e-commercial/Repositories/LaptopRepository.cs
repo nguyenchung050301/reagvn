@@ -3,7 +3,7 @@ using e_commercial.DTOs.Request;
 using e_commercial.DTOs.Request.Pagination;
 using e_commercial.DTOs.Response.Pagination;
 using e_commercial.Exceptions;
-using e_commercial.Models.Products;
+using e_commercial.Models;
 using e_commercial.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
@@ -16,7 +16,7 @@ namespace e_commercial.Repositories
         public LaptopRepository(ReagvnContext context)
         {
             _context = context;
-            _dbSet = context.Laptops;
+            _dbSet = context.Set<Laptop>();
         }
         public void Add(Laptop laptop)
         {          
@@ -43,12 +43,12 @@ namespace e_commercial.Repositories
         public Laptop GetByID(Guid id)
         {
            
-            Laptop laptop = _dbSet
+         /*   Laptop laptop = _dbSet
                 .Include(p => p.Category)
                 .Include(p => p.Manufacturer)
-                .FirstOrDefault(p => p.LaptopId == id.ToString());
+                .FirstOrDefault(p => p.LaptopId == id.ToString());*/
           
-            return laptop;
+            return FindByID(id);
         }
 
         public (IQueryable<Laptop>,int) GetPagination(int pageNumber, int pageSize, string? name)
@@ -83,7 +83,7 @@ namespace e_commercial.Repositories
         }
         private Laptop FindByID(Guid id)
         {
-            var existing = _dbSet.Find(id);
+            var existing = _dbSet.Find(id.ToString());
             if (existing == null)
             {
                 throw new KeyNotFoundException($"Laptop with ID {id} not found.");

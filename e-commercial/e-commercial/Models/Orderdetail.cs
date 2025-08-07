@@ -17,5 +17,13 @@ public partial class Orderdetail
 
     public string ProductType { get; set; } = null!;
 
+    public string? District { get; set; }
+
+    public string? Ward { get; set; }
+
+    public string? Address { get; set; }
+
+    public string? Phone { get; set; }
+
     public virtual Order Order { get; set; } = null!;
 }

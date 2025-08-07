@@ -2,7 +2,7 @@
 using e_commercial.DTOs.Request;
 using e_commercial.DTOs.Request.Pagination;
 using e_commercial.DTOs.Response.Pagination;
-using e_commercial.Models.Products;
+using e_commercial.Models;
 using e_commercial.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
@@ -15,11 +15,11 @@ namespace e_commercial.Repositories
         public KeyboardRepository(ReagvnContext context)
         {
             _context = context;
-            _dbSet = context.Keyboards;
+            _dbSet = context.Set<Keyboard>();
         }
 
         public void Add(Keyboard keyboard)
-        {          
+        {
             _dbSet.Add(keyboard);
             _context.SaveChanges();
         }
@@ -78,6 +78,24 @@ namespace e_commercial.Repositories
             };
         }
 
+        public (IQueryable<Keyboard>, int) GetPagination(int pageNumber, int pageSize, string? name)
+        {
+            var query = SearchByName(name);
+            int totalCount = query.Count();
+            int totalPages = (int)Math.Ceiling((double)totalCount / pageSize);
+            var item = query.Skip(pageSize * (pageNumber - 1)).OrderBy(p => p.KeyboardName).Take(pageSize);
+            return (item, totalCount);
+        }
+
+        public IQueryable<Keyboard> SearchByName(string? name)
+        {
+            if (string.IsNullOrEmpty(name))
+            {
+                return _dbSet.AsQueryable();
+            }
+            return _dbSet.Where(p => p.KeyboardName.Contains(name)).OrderBy(p => p.KeyboardName);
+        }
+
         public void Update(Keyboard keyboard)
         {
             _dbSet.Update(keyboard);
@@ -92,6 +110,10 @@ namespace e_commercial.Repositories
                 throw new KeyNotFoundException($"Keyboard with ID {id} not found.");
             }
             return existing;
+        }
+        public IEnumerable<Keyboard> FindInIDs(IEnumerable<string> ids)
+        {
+            return _dbSet.Where(p => ids.Contains(p.KeyboardId)).ToList();
         }
     }
 }

@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using Pomelo.EntityFrameworkCore.MySql.Scaffolding.Internal;
 using e_commercial.Models;
-using e_commercial.Models.Products;
 
 namespace e_commercial.Data;
 
@@ -37,6 +36,8 @@ public partial class ReagvnContext : DbContext
     public virtual DbSet<Order> Orders { get; set; }
 
     public virtual DbSet<Orderdetail> Orderdetails { get; set; }
+
+    public virtual DbSet<Payment> Payments { get; set; }
 
     public virtual DbSet<Refreshtoken> Refreshtokens { get; set; }
 
@@ -416,9 +417,22 @@ public partial class ReagvnContext : DbContext
             entity.Property(e => e.OrderDetailId)
                 .HasMaxLength(36)
                 .HasColumnName("order_detail_id");
+            entity.Property(e => e.Address)
+                .HasMaxLength(255)
+                .HasColumnName("address")
+                .UseCollation("utf8mb3_general_ci")
+                .HasCharSet("utf8mb3");
+            entity.Property(e => e.District)
+                .HasMaxLength(255)
+                .HasColumnName("district")
+                .UseCollation("utf8mb3_general_ci")
+                .HasCharSet("utf8mb3");
             entity.Property(e => e.OrderId)
                 .HasMaxLength(36)
                 .HasColumnName("order_id");
+            entity.Property(e => e.Phone)
+                .HasMaxLength(13)
+                .HasColumnName("phone");
             entity.Property(e => e.ProductId)
                 .HasMaxLength(36)
                 .HasColumnName("product_id");
@@ -429,11 +443,54 @@ public partial class ReagvnContext : DbContext
                 .HasCharSet("utf8mb3");
             entity.Property(e => e.Quantity).HasColumnName("quantity");
             entity.Property(e => e.UnitPrice).HasColumnName("unit_price");
+            entity.Property(e => e.Ward)
+                .HasMaxLength(255)
+                .HasColumnName("ward")
+                .UseCollation("utf8mb3_general_ci")
+                .HasCharSet("utf8mb3");
 
             entity.HasOne(d => d.Order).WithMany(p => p.Orderdetails)
                 .HasForeignKey(d => d.OrderId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("orderdetail_ibfk_1");
+        });
+
+        modelBuilder.Entity<Payment>(entity =>
+        {
+            entity.HasKey(e => e.PaymentId).HasName("PRIMARY");
+
+            entity.ToTable("payment");
+
+            entity.HasIndex(e => e.OrderId, "fk1");
+
+            entity.HasIndex(e => e.UserId, "fk2");
+
+            entity.Property(e => e.PaymentId)
+                .HasMaxLength(36)
+                .HasColumnName("payment_id");
+            entity.Property(e => e.CreatedAt)
+                .HasColumnType("datetime")
+                .HasColumnName("created_at");
+            entity.Property(e => e.OrderId)
+                .HasMaxLength(36)
+                .HasColumnName("order_id");
+            entity.Property(e => e.PaymentPrice).HasColumnName("payment_price");
+            entity.Property(e => e.PaymentType)
+                .HasMaxLength(255)
+                .HasColumnName("payment_type")
+                .UseCollation("utf8mb3_general_ci")
+                .HasCharSet("utf8mb3");
+            entity.Property(e => e.UserId)
+                .HasMaxLength(36)
+                .HasColumnName("user_id");
+
+            entity.HasOne(d => d.Order).WithMany(p => p.Payments)
+                .HasForeignKey(d => d.OrderId)
+                .HasConstraintName("fk1");
+
+            entity.HasOne(d => d.User).WithMany(p => p.Payments)
+                .HasForeignKey(d => d.UserId)
+                .HasConstraintName("fk2");
         });
 
         modelBuilder.Entity<Refreshtoken>(entity =>

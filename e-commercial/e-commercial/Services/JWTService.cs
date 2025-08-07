@@ -44,6 +44,7 @@ namespace e_commercial.Services
         {
             var claims = new[]
             {
+                new Claim(ClaimTypes.PrimarySid, user.UserId), //Jti: Unique identifier for the token
                 new Claim(JwtRegisteredClaimNames.Sub, user.Username), //nhúng data vào token với kiểu claimtype
                 new Claim(ClaimTypes.Role, user.UserRole), //cần xem lại chỗ này
             };
@@ -86,6 +87,15 @@ namespace e_commercial.Services
         public JwtSecurityTokenHandler GetJwtSecurityTokenHandler()
         {
             return tokenHandler;
+        }
+        public string ExtractID(ClaimsPrincipal user)
+        {
+            Claim userID = user.Claims.FirstOrDefault(p => p.Type == ClaimTypes.PrimarySid);
+            if (userID == null)
+            {
+                throw new BadValidationException("User ID not found in token", nameof(user));
+            }
+            return userID.Value;
         }
     }
 }

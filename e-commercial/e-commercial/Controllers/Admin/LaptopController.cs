@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
-namespace e_commercial.Controllers
+namespace e_commercial.Controllers.Admin
 {
 
     [Route("api/[controller]")]
@@ -86,7 +86,7 @@ namespace e_commercial.Controllers
                 _laptopService.DeleteLaptop(id);
                 return NoContent();
             }
-            catch (ArgumentException ex)
+            catch (BadValidationException ex)
             {
                 return BadRequest(ex.Message);
             }
@@ -101,7 +101,7 @@ namespace e_commercial.Controllers
             }
             catch (BadValidationException ex)
             {
-                throw new BadValidationException("Ko co san pham", nameof(ex)); 
+                return BadRequest(ex.Message);
             }
         }
       /*  [HttpPost("AddToCart/{id}")]
