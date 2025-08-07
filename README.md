@@ -5,15 +5,18 @@
  +Admin: Approve or Cancel request. Stock handling.
 - Add Order detail.
 - Re-Scafford database.
+  
 **0.1.4**
 - Add some Authorize into some API to seperate role.
 - Add Cart feature: add products to cart.
 - Add some pagination into products.
+  
 **0.1.3**
 - Add Other Repositories and Services: branch, order,...
 - Add more Controller.
 - Add more CRUD features.
-- Add more DTO Models. 
+- Add more DTO Models.
+  
 **0.1.2**
 - Add feature: Register, Login (with JWT Token).
 - Add Laptop Service, User Service.
