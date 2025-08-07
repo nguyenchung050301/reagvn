@@ -1,8 +1,8 @@
 # reagvn
 **0.1.5**
 - Add order feature:
-+User: make an order.
-+Admin: Approve or Cancel request. Stock handling.
+  - User: make an order.
+  - Admin: Approve or Cancel request. Stock handling.
 - Add Order detail.
 - Re-Scafford database.
   
