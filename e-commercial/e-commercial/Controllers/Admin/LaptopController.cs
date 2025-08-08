@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
-namespace e_commercial.Controllers
+namespace e_commercial.Controllers.Admin
 {
 
     [Route("api/[controller]")]
@@ -28,7 +28,7 @@ namespace e_commercial.Controllers
             return Ok(_laptopService.GetLaptopDetails(id));
         }
 
-        [Authorize]
+        [Authorize (Roles = RoleEnum.User)]
         [HttpGet]
         public IActionResult GetAll()
         {
@@ -86,7 +86,7 @@ namespace e_commercial.Controllers
                 _laptopService.DeleteLaptop(id);
                 return NoContent();
             }
-            catch (ArgumentException ex)
+            catch (BadValidationException ex)
             {
                 return BadRequest(ex.Message);
             }
@@ -101,23 +101,23 @@ namespace e_commercial.Controllers
             }
             catch (BadValidationException ex)
             {
-                throw new BadValidationException("Ko co san pham", nameof(ex)); 
+                return BadRequest(ex.Message);
             }
         }
+      /*  [HttpPost("AddToCart/{id}")]
 
-        [HttpGet("search")]
-        public IActionResult SearchByName([FromQuery] string name)
+        public IActionResult AddProductToCart(Guid id)
         {
             try
             {
-                return Ok(_laptopService.SearchByName(name));
+                _laptopService.AddProductToCart(id);
+                return Created();
             }
             catch (BadValidationException ex)
             {
-                throw new BadValidationException("Khong co san pham", nameof(ex));
+                throw new BadValidationException("Khong the them san pham vao gio hang", nameof(ex));
             }
-        }
-        
+        }*/
         private string GetHeaderAuthor()
         {
             if (Request.Headers.TryGetValue("Authorization", out var header))
