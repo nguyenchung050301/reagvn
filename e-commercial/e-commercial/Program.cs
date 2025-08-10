@@ -1,4 +1,5 @@
 using e_commercial.Data;
+using e_commercial.Middleware;
 using e_commercial.Repositories;
 using e_commercial.Repositories.Interfaces;
 using e_commercial.Services;
@@ -48,14 +49,14 @@ builder.Services.AddScoped<PaymentService>();
 builder.Services.AddScoped<OrderService>();
 builder.Services.AddScoped<KeyboardServicce>();
 builder.Services.AddScoped<LaptopService>();
+
 builder.Services.AddDbContext<ReagvnContext>(options =>
     options.UseMySql(
         builder.Configuration.GetConnectionString("MySQLConnection"),
         ServerVersion.AutoDetect(builder.Configuration.GetConnectionString("MySQLConnection"))
     )
 );
-//builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddScheme<AuthenticationSchemeOptions, 
- //   MyAppAuthenticationHandler>(JwtBearerDefaults.AuthenticationScheme, (opt) => { });
+
 var publicKey = builder.Configuration["JWT:PublicKeyPath"];
 using var rsa = RSA.Create();
 rsa.ImportFromPem(File.ReadAllText(publicKey).ToCharArray());
@@ -85,7 +86,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-
+app.UseMiddleware<GlobalExceptionMiddleware>();
 app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();

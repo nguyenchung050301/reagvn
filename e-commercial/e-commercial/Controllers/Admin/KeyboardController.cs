@@ -35,14 +35,7 @@ namespace e_commercial.Controllers.Admin
         [HttpGet("{id}")]
         public IActionResult GetDetailByID(Guid id)
         {
-            try
-            {
-                return Ok(_keyboardService.GetKeyboardDetails(id));
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
+            return Ok(_keyboardService.GetKeyboardDetails(id));
         }
 
         [HttpPost]

@@ -32,19 +32,12 @@ namespace e_commercial.Controllers.Admin
         [HttpGet]
         public IActionResult GetAll()
         {
-            try
-            {
-                var token = GetHeaderAuthor();
-                return Ok(_laptopService.GetAllLaptopDetails(token));
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
-           /* catch (BadValidationException ex)
-            {
-                throw new BadValidationException("Token het han", nameof(ex));
-            }*/
+            var token = GetHeaderAuthor();
+            return Ok(_laptopService.GetAllLaptopDetails(token));
+            /* catch (BadValidationException ex)
+             {
+                 throw new BadValidationException("Token het han", nameof(ex));
+             }*/
         }
 
   //     [Authorize(Roles = RoleEnum.Admin)]
