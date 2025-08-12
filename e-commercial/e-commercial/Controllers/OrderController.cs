@@ -23,6 +23,8 @@ namespace e_commercial.Controllers
             _jwtService = jwtService;
             _userService = userService;
         }
+
+        [Authorize(Roles = RoleEnum.Admin)]
         [HttpGet("admin/{id}")]
         public IActionResult GetOrderById(Guid id)
         {
@@ -37,6 +39,8 @@ namespace e_commercial.Controllers
             }
         }
 
+
+        [Authorize(Roles = RoleEnum.Admin)]
         [HttpGet("/admin")]
         public IActionResult GetAllOrders()
         {
@@ -58,7 +62,8 @@ namespace e_commercial.Controllers
             }
         }
 
-        [HttpPut("admin/order/approve/{id}")]
+        [Authorize(Roles = RoleEnum.Admin)]
+        [HttpPut("admin/order/{id}/approve")]
         public IActionResult ApproveOrder(Guid id)
         {
             try
@@ -73,12 +78,13 @@ namespace e_commercial.Controllers
         }
 
         [Authorize(Roles = RoleEnum.Admin)]
-        [HttpPut("admin/order/cancel/{id}")]
+        [HttpPut("admin/order/{id}/cancel")]
         public IActionResult CanncelOrderByAdmin(Guid id)
         {
             try
             {
-                _orderService.CancelOrderByAdmin(id);
+                var cancelId = _jwtService.ExtractID(User); // Extract user ID if needed for logging or auditing
+                _orderService.CancelOrderByAdmin(id, Guid.Parse(cancelId));
                 return Ok();
             }
             catch (Exception ex)
@@ -88,12 +94,13 @@ namespace e_commercial.Controllers
         }
 
         [Authorize(Roles = RoleEnum.User)]
-        [HttpPut("user/order/cancel/{id}")]
+        [HttpPut("user/order/{id}/cancel")]
         public IActionResult CanncelOrderByUser(Guid id)
         {
             try
             {
-                _orderService.CancelOrderByUser(id);
+                var cancelId = _jwtService.ExtractID(User); // Extract user ID if needed for logging or auditing
+                _orderService.CancelOrderByUser(id, Guid.Parse(cancelId));
                 return Ok();
             }
             catch (Exception ex)

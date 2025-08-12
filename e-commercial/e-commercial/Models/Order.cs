@@ -15,6 +15,8 @@ public partial class Order
 
     public string? UserId { get; set; }
 
+    public string? CancelBy { get; set; }
+
     public virtual ICollection<Orderdetail> Orderdetails { get; set; } = new List<Orderdetail>();
 
     public virtual ICollection<Payment> Payments { get; set; } = new List<Payment>();

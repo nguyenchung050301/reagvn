@@ -52,14 +52,14 @@ namespace e_commercial.Services
                 ManufacturerName = laptop.Manufacturer?.ManufacturerName,
             };
         }
-        public IEnumerable<LaptopDetailDTO> GetAllLaptopDetails(string token)
+        public IEnumerable<LaptopDetailDTO> GetAllLaptopDetails()
         {
-            var handler = _jwtService.GetJwtSecurityTokenHandler();
+           /* var handler = _jwtService.GetJwtSecurityTokenHandler();
             if (token.IsNullOrEmpty())
             {
                 throw new BadValidationException("Token ko the null", nameof(token));
             }
-            var tokenReader = handler.ReadToken(token);
+            var tokenReader = handler.ReadToken(token);*/
        
             var laptops = _laptopRepository.GetAll();
             return laptops.Select(laptop => new LaptopDetailDTO

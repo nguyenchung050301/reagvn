@@ -41,59 +41,28 @@ namespace e_commercial.Controllers.Admin
         [HttpPost]
         public IActionResult Create([FromBody] KeyboardCreateDTO keyboardDTO)
         {
-            try
-            {
-                _keyboardService.CreateKeyboard(keyboardDTO);
-                return Created("", null);
-            }
-            catch (ArgumentException ex)
-            {
-                return BadRequest(ex.Message);
-            }
+            _keyboardService.CreateKeyboard(keyboardDTO);
+            return Created("", null);
         }
 
         [HttpPut("{id}")]
         public IActionResult Update([FromBody] KeyboardUpdateDTO keyboardDTO, Guid Id)
         {
-            try
-            {
-                _keyboardService.UpdateKeyboard(keyboardDTO, Id);
-                return Ok();
-            }
-            catch (BadValidationException ex)
-            {
-                return BadRequest(ex.Message);
-            }
+            _keyboardService.UpdateKeyboard(keyboardDTO, Id);
+            return Ok();
         }
 
         [HttpDelete("{id}")]
         public IActionResult Delete(Guid id)
         {
-            try
-            {
-                _keyboardService.DeleteKeyboard(id);
-                return Ok();
-            }
-            catch (BadValidationException ex)
-            {
-                return BadRequest(ex.Message);
-            }
+            _keyboardService.DeleteKeyboard(id);
+            return Ok();
         }
 
         [HttpGet("page")]
         public IActionResult GetPaginatedKeyboards([FromQuery] PaginationRequestDTO requestDTO, [FromQuery] string? name)
         {
-            try
-            {
-                var paginatedKeyboards = _keyboardService.GetPagination(requestDTO, name);
-                return Ok(paginatedKeyboards);
-            }
-            catch (BadValidationException ex)
-            {
-                return BadRequest(ex.Message);
-            }
-
-
+            return Ok(_keyboardService.GetPagination(requestDTO, name));
         }
     }
 }

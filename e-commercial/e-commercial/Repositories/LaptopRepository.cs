@@ -86,7 +86,7 @@ namespace e_commercial.Repositories
             var existing = _dbSet.Find(id.ToString());
             if (existing == null)
             {
-                throw new KeyNotFoundException($"Laptop with ID {id} not found.");
+                throw new NotFoundException(id.ToString());
             }
             return existing;
         }

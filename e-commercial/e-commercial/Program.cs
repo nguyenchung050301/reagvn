@@ -1,4 +1,5 @@
 using e_commercial.Data;
+using e_commercial.Exceptions;
 using e_commercial.Middleware;
 using e_commercial.Repositories;
 using e_commercial.Repositories.Interfaces;
@@ -7,6 +8,9 @@ using e_commercial.Services;
 using e_commercial.Services.ServiceFactory;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Formatters;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System;
@@ -18,10 +22,14 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-builder.Services.AddControllers().AddJsonOptions(options =>
+
+builder.Services.AddControllers(options =>
+{
+    options.Filters.Add<JsonExceptionFilter>();
+}).AddJsonOptions(options =>
 {
     options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
-}); 
+});
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -57,6 +65,30 @@ builder.Services.AddDbContext<ReagvnContext>(options =>
     )
 );
 
+builder.Services.Configure<ApiBehaviorOptions>(options =>
+{
+    options.InvalidModelStateResponseFactory = context =>
+    {
+        var errors = context.ModelState
+        //modelState: trang thai cua du lieu dau vao sau khi dc binding va validation
+        //output: tra ve cac fields bi loi
+            .Where(x => x.Value.Errors.Count > 0)
+            .Select(x => new
+            {
+                Field = x.Key,
+                Errors = x.Value.Errors.Select(e => e.ErrorMessage)
+            });
+
+        return new BadRequestObjectResult(new
+        {
+            StatusCode = 400,
+            Message = "Validation failed",
+            Details = errors
+        });
+    };
+});
+
+
 var publicKey = builder.Configuration["JWT:PublicKeyPath"];
 using var rsa = RSA.Create();
 rsa.ImportFromPem(File.ReadAllText(publicKey).ToCharArray());
@@ -76,18 +108,26 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJw
     };
 });
 
-   
+
 builder.Services.AddAuthorization();
 
+
+
+
+
 var app = builder.Build();
+
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-app.UseMiddleware<GlobalExceptionMiddleware>();
+
+
 app.UseHttpsRedirection();
+app.UseMiddleware<GlobalExceptionMiddleware>();
+app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
 

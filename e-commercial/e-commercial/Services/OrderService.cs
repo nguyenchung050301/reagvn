@@ -76,7 +76,7 @@ namespace e_commercial.Services
             _orderRepository.Update(existing);
         }
 
-        public void CancelOrderByUser(Guid orderId)
+        public void CancelOrderByUser(Guid orderId, Guid CancelById)
         {
             var existing = _orderRepository.GetByID(orderId);
             if (existing == null)
@@ -88,21 +88,19 @@ namespace e_commercial.Services
                 throw new BadValidationException("Order cannot be cancelled because it is not in pending status.");
             }
             existing.OrderStatus = OrderStatusEnum.CancelledByUser.ToString();
+            existing.CancelBy = CancelById.ToString();
             _orderRepository.Update(existing);
         }
 
-        public void CancelOrderByAdmin(Guid orderId)
+        public void CancelOrderByAdmin(Guid orderId, Guid cancelById)
         {
             var existing = _orderRepository.GetByID(orderId);
             if (existing == null)
             {
                 throw new BadValidationException("Order not found.");
             }
-            if (existing.OrderStatus != OrderStatusEnum.Pending.ToString())
-            {
-                throw new BadValidationException("Order cannot be cancelled because it is not in pending status.");
-            }
             existing.OrderStatus = OrderStatusEnum.CancelledByAdmin.ToString();
+            existing.CancelBy = cancelById.ToString();
             _orderRepository.Update(existing);
         }
         /// <summary>

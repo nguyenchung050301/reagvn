@@ -388,6 +388,9 @@ public partial class ReagvnContext : DbContext
             entity.Property(e => e.OrderId)
                 .HasMaxLength(36)
                 .HasColumnName("order_id");
+            entity.Property(e => e.CancelBy)
+                .HasMaxLength(36)
+                .HasColumnName("cancel_by");
             entity.Property(e => e.CreatedAt)
                 .HasColumnType("datetime")
                 .HasColumnName("created_at");

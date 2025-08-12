@@ -20,7 +20,7 @@ namespace e_commercial.Controllers.Admin
             _laptopService = laptopService;
         }
 
-       // [Authorize(Roles = RoleEnum.Admin)]
+        [Authorize(Roles = RoleEnum.Admin)]
         [HttpGet("{id}")]
         public IActionResult GetDetailByID(Guid id)
         {            
@@ -28,89 +28,46 @@ namespace e_commercial.Controllers.Admin
             return Ok(_laptopService.GetLaptopDetails(id));
         }
 
-        [Authorize (Roles = RoleEnum.User)]
+        [Authorize (Roles = RoleEnum.Admin)]
         [HttpGet]
         public IActionResult GetAll()
         {
-            var token = GetHeaderAuthor();
-            return Ok(_laptopService.GetAllLaptopDetails(token));
-            /* catch (BadValidationException ex)
-             {
-                 throw new BadValidationException("Token het han", nameof(ex));
-             }*/
+            return Ok(_laptopService.GetAllLaptopDetails());
+    
         }
 
-  //     [Authorize(Roles = RoleEnum.Admin)]
+       [Authorize(Roles = RoleEnum.Admin)]
         [HttpPost]
         public IActionResult Create(LaptopCreateDTO laptopDTO)
         {
-            try
-            {
-                _laptopService.CreateLaptop(laptopDTO);
-                return Created();
-            }
-            catch (ArgumentException ex)
-            {
-                return BadRequest(ex.Message);
-            }         
+
+            _laptopService.CreateLaptop(laptopDTO);
+            return Created();
         }
 
-    //    [Authorize(Roles = RoleEnum.Admin)]
+        [Authorize(Roles = RoleEnum.Admin)]
         [HttpPut("{id}")] 
         public IActionResult Update(LaptopUpdateDTO laptopDTO, Guid id)
         {
-            try
-            {
-                _laptopService.UpdateLaptop(laptopDTO, id);
-                return Ok(laptopDTO);
-            }
-            catch (ArgumentException ex)
-            {
-                return BadRequest(ex.Message);
-            }
+            _laptopService.UpdateLaptop(laptopDTO, id);
+            return Ok(laptopDTO);
         }
 
-      //  [Authorize(Roles = RoleEnum.Admin)]
+        [Authorize(Roles = RoleEnum.Admin)]
         [HttpDelete("{id}")]
         public IActionResult Delete(Guid id)
         {
-            try
-            {
-                _laptopService.DeleteLaptop(id);
-                return NoContent();
-            }
-            catch (BadValidationException ex)
-            {
-                return BadRequest(ex.Message);
-            }
+            _laptopService.DeleteLaptop(id);
+            return NoContent();
         }
 
+        [Authorize(Roles = RoleEnum.Admin)]
         [HttpGet("page")]
         public IActionResult Pagination([FromQuery]PaginationRequestDTO paginationDTO, [FromQuery]string? name)
         {
-            try
-            {
-                return Ok(_laptopService.GetPagination(paginationDTO, name));
-            }
-            catch (BadValidationException ex)
-            {
-                return BadRequest(ex.Message);
-            }
+            return Ok(_laptopService.GetPagination(paginationDTO, name));
         }
-      /*  [HttpPost("AddToCart/{id}")]
-
-        public IActionResult AddProductToCart(Guid id)
-        {
-            try
-            {
-                _laptopService.AddProductToCart(id);
-                return Created();
-            }
-            catch (BadValidationException ex)
-            {
-                throw new BadValidationException("Khong the them san pham vao gio hang", nameof(ex));
-            }
-        }*/
+ 
         private string GetHeaderAuthor()
         {
             if (Request.Headers.TryGetValue("Authorization", out var header))
