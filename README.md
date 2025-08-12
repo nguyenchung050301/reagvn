@@ -4,6 +4,7 @@
   - Payment: pay an order.
   - Global Exception Handling Middleware.
   - Add Authorization to some API methods.
+
 **0.1.5**
 - Add order feature:
   - User: make an order.
