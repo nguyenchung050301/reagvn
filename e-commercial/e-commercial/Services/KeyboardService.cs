@@ -1,4 +1,5 @@
 ﻿
+using e_commercial.Data;
 using e_commercial.DTOs.Request.Keyboard;
 using e_commercial.DTOs.Request.Pagination;
 using e_commercial.DTOs.Response.Keyboard;
@@ -7,28 +8,21 @@ using e_commercial.DTOs.Response.Pagination;
 using e_commercial.Exceptions;
 using e_commercial.Models;
 using e_commercial.Repositories.Interfaces;
+using e_commercial.Services.ParentService;
 
 
 namespace e_commercial.Services
 {
-    public class KeyboardServicce
+    public class KeyboardService
     {
         private readonly string productType = "Keyboard";
-     //   private readonly ICartRepository _cartRepository;
         private readonly IKeyboardRepository _keyboardRepository;
-        private readonly IManufacturerRepository _manufacturerRepository;
-        private readonly ICategoryRepository _categoryRepository;
+        protected readonly IManufacturerRepository _manufacturerRepository;
+        protected readonly ICategoryRepository _categoryRepository;
 
-       // private readonly CartService _cartService;
-
-        public KeyboardServicce(IKeyboardRepository keyboardRepository, IManufacturerRepository manufacturerRepository, 
-            ICategoryRepository categoryRepository)
+        public KeyboardService(ReagvnContext context, IKeyboardRepository keyboardRepository, IManufacturerRepository manufacturerRepository, ICategoryRepository categoryRepository)          
         {
             _keyboardRepository = keyboardRepository;
-            _manufacturerRepository = manufacturerRepository;
-            _categoryRepository = categoryRepository;
-          //  _cartRepository = cartRepository;
-
         }
         public KeyboardDetailDTO GetKeyboardDetails(Guid id)
         {
@@ -40,7 +34,7 @@ namespace e_commercial.Services
             }
 
             return new KeyboardDetailDTO
-            {          
+            {
                 KeyboardName = existing.KeyboardName,
                 KeyboardDescription = existing.KeyboardDescription,
                 KeyboardImage = existing.KeyboardImage,
@@ -49,6 +43,7 @@ namespace e_commercial.Services
                 ManufacturerName = existing.Manufacturer.ManufacturerName
             };
         }
+
         public IEnumerable<KeyboardAllDetailDTO> GetKeyboardAllDetails()
         {
             var keyboards = _keyboardRepository.GetAll();
@@ -62,10 +57,11 @@ namespace e_commercial.Services
                 ManufacturerName = k.Manufacturer?.ManufacturerName
             });
         }
+
         public void CreateKeyboard(KeyboardCreateDTO keyboardDTO)
         {
             var category = _categoryRepository.GetByID(Guid.Parse(keyboardDTO.CategoryId));
-            if (category == null) 
+            if (category == null)
             {
                 throw new BadValidationException("Category cannot be null", nameof(category));
             }
@@ -76,6 +72,7 @@ namespace e_commercial.Services
                 throw new BadValidationException("Manufacturer cannot be null", nameof(manufacturer));
             }
         }
+
         public void UpdateKeyboard(KeyboardUpdateDTO keyboardDTO, Guid id)
         {
             if (id == null)
@@ -96,7 +93,6 @@ namespace e_commercial.Services
             existing.UpdatedAt = DateTime.UtcNow;
             existing.UpdatedBy = "System"; // This should be replaced with the actual user ID or name
             _keyboardRepository.Update(existing);
-
         }
 
         public void DeleteKeyboard(Guid id)
@@ -126,43 +122,6 @@ namespace e_commercial.Services
                 }
                 ).ToList()
             };
-
         }
-        /*  public void AddProductToCart(Guid id)
-          {
-              if (id == Guid.Empty)
-              {
-                  throw new BadValidationException("Product ID cannot be empty.", nameof(id));
-              }
-
-              var existing = _keyboardRepository.GetByID(id);
-              new CartAddProductDTO
-              {
-                  ProductId = existing.KeyboardId,
-                  ProductType = productType,
-                  Quantity =  1, // Assuming default quantity is 1 when adding to cart
-                  UnitPrice = (float)existing.Price
-              };
-
-              _cartService.AddToCart(new Cart
-              {
-                  CartId = Guid.NewGuid().ToString(),
-                  ProductId = existing.KeyboardId.ToString(),
-                  ProductType = productType,
-                  Quantity = 1, // Assuming default quantity is 1 when adding to cart
-                  UnitPrice = (float)existing.Price
-              });
-          }
-
-          public void DecreaseStock(Guid id, int quantity)
-          {
-              var existing = _keyboardRepository.GetByID(id);
-              if (existing == null)
-              {
-                  throw new BadValidationException($"Keyboard with ID {id} not found.", nameof(existing));
-              }
-
-              existing.StockQuantity -= quantity;
-          }*/
     }
 }

@@ -123,6 +123,29 @@ namespace e_commercial.Services
                  orderDTO.CartItems
                .GroupBy(item => item.ProductType)
                .ToDictionary(g => g.Key, g => g.AsEnumerable());
+            /*Cach 1: 
+      Dictionary<string, IEnumerable<OrderCreateDTO.CartItemDTO>> dicts =
+             orderDTO.CartItems
+           .GroupBy(item => item.ProductType)
+           .ToDictionary(g => g.Key, g => g.AsEnumerable()); 
+   */
+            /*Cach 2:
+            public Dictionary<string, IEnumerable<OrderCreateDTO.CartItemDTO>> MapDict(IEnumerable<OrderCreateDTO.CartItemDTO> cartItem)
+            {
+                Dictionary<string, IEnumerable<OrderCreateDTO.CartItemDTO>> results = new();
+
+                foreach (var item in cartItem)
+                {
+                    if (!results.ContainsKey(item.ProductType))
+                    {
+                        results[item.ProductType] = new List<OrderCreateDTO.CartItemDTO>();
+
+                    }
+                    results[item.ProductType].Append(item);
+
+                }
+                return results;
+            }*/
             var order = new Order
             {
                 OrderId = orderId,
@@ -172,29 +195,7 @@ namespace e_commercial.Services
 
         }
 
-        /*Cach 1: 
-           Dictionary<string, IEnumerable<OrderCreateDTO.CartItemDTO>> dicts =
-                  orderDTO.CartItems
-                .GroupBy(item => item.ProductType)
-                .ToDictionary(g => g.Key, g => g.AsEnumerable()); 
-        */
-        /*Cach 2:
-        public Dictionary<string, IEnumerable<OrderCreateDTO.CartItemDTO>> MapDict(IEnumerable<OrderCreateDTO.CartItemDTO> cartItem)
-        {
-            Dictionary<string, IEnumerable<OrderCreateDTO.CartItemDTO>> results = new();
-
-            foreach (var item in cartItem)
-            {
-                if (!results.ContainsKey(item.ProductType))
-                {
-                    results[item.ProductType] = new List<OrderCreateDTO.CartItemDTO>();
-                    
-                }
-                results[item.ProductType].Append(item);
-
-            }
-            return results;
-        }*/
+   
         private IEnumerable<(string, ProductTypeEnum, float, int)> ValidateProducts(ProductTypeEnum type, IEnumerable<OrderCreateDTO.CartItemDTO> cartItems)
         {
             switch (type)

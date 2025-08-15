@@ -1,4 +1,5 @@
 ﻿
+using e_commercial.Data;
 using e_commercial.DTOs.Request.Laptop;
 using e_commercial.DTOs.Request.Pagination;
 using e_commercial.DTOs.Response.Laptop;
@@ -7,6 +8,7 @@ using e_commercial.Exceptions;
 using e_commercial.Models;
 using e_commercial.Repositories;
 using e_commercial.Repositories.Interfaces;
+using e_commercial.Services.ParentService;
 using Microsoft.IdentityModel.Tokens;
 using System.Text.Json;
 
@@ -16,17 +18,14 @@ namespace e_commercial.Services
     {
         private readonly string productType = "Laptop";
         private readonly ILaptopRepository _laptopRepository;
-        private readonly ICategoryRepository _categoryRepository;
-        private readonly IManufacturerRepository _manufacturerRepository;
         private readonly JWTService _jwtService;
-      //  private readonly CartService _cartService;
-
-        public LaptopService(ILaptopRepository laptopRepository, ICategoryRepository categoryRepository,
+        //  private readonly CartService _cartService;
+        protected readonly IManufacturerRepository _manufacturerRepository;
+        protected readonly ICategoryRepository _categoryRepository;
+        public LaptopService(ReagvnContext context, ILaptopRepository laptopRepository, ICategoryRepository categoryRepository,
             IManufacturerRepository manufacturerRepository, JWTService jwtService)
         {
             _laptopRepository = laptopRepository;
-            _categoryRepository = categoryRepository;
-            _manufacturerRepository = manufacturerRepository;
          //   _cartService = cartService;
             _jwtService = jwtService;
         }

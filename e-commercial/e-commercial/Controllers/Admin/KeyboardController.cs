@@ -13,8 +13,8 @@ namespace e_commercial.Controllers.Admin
     [Route("api/[controller]")]
     public class KeyboardController : Controller
     {
-        private readonly KeyboardServicce _keyboardService;
-        public KeyboardController(KeyboardServicce keyboardService)
+        private readonly KeyboardService _keyboardService;
+        public KeyboardController(KeyboardService keyboardService)
         {
             _keyboardService = keyboardService;
         }

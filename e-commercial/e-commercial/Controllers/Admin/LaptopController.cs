@@ -61,7 +61,7 @@ namespace e_commercial.Controllers.Admin
             return NoContent();
         }
 
-        [Authorize(Roles = RoleEnum.Admin)]
+//        [Authorize(Roles = RoleEnum.Admin)]
         [HttpGet("page")]
         public IActionResult Pagination([FromQuery]PaginationRequestDTO paginationDTO, [FromQuery]string? name)
         {

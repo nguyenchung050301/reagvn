@@ -126,48 +126,6 @@ namespace e_commercial.Controllers
                 return BadRequest(ex.Message);
             }
         }                                                                                   
-/*
-        [HttpPut("{id}")]
-        public IActionResult UpdateOrder(Guid id, [FromBody] OrderCreateDTO orderDTO)
-        {
-            try
-            {
-                _orderService.UpdateOrder(id, orderDTO);
-                return Ok();
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
-        }
 
-        [HttpDelete("{id}")]
-        public IActionResult DeleteOrder(Guid id)
-        {
-            try
-            {
-                _orderService.DeleteOrder(id);
-                return NoContent();
-            }
-            catch (Exception ex)
-            {
-                return NotFound(ex.Message);
-            }
-        }
-
-        [HttpGet("page")]
-        public IActionResult Pagination([FromQuery] PaginationRequestDTO paginationDTO)
-        {
-            try
-            {
-                var result = _orderService.GetPagination(paginationDTO);
-                return Ok(result);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
-        }
-*/
     }
 }

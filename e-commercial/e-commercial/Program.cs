@@ -4,7 +4,7 @@ using e_commercial.Middleware;
 using e_commercial.Repositories;
 using e_commercial.Repositories.Interfaces;
 using e_commercial.Services;
-
+using e_commercial.Services.ParentService;
 using e_commercial.Services.ServiceFactory;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -23,10 +23,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 
 
-builder.Services.AddControllers(options =>
-{
-    options.Filters.Add<JsonExceptionFilter>();
-}).AddJsonOptions(options =>
+builder.Services.AddControllers().AddJsonOptions(options =>
 {
     options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
 });
@@ -55,7 +52,9 @@ builder.Services.AddScoped<PaymentService>();
 //builder.Services.AddScoped<KeyboardServicce>();
 
 builder.Services.AddScoped<OrderService>();
-builder.Services.AddScoped<KeyboardServicce>();
+builder.Services.AddScoped<ProductService>();
+builder.Services.AddScoped<KeyboardService>();
+
 builder.Services.AddScoped<LaptopService>();
 
 builder.Services.AddDbContext<ReagvnContext>(options =>
@@ -126,7 +125,7 @@ if (app.Environment.IsDevelopment())
 
 
 app.UseHttpsRedirection();
-app.UseMiddleware<GlobalExceptionMiddleware>();
+//app.UseMiddleware<GlobalExceptionMiddleware>();
 app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
