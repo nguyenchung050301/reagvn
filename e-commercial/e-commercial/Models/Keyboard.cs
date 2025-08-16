@@ -27,6 +27,10 @@ public partial class Keyboard
 
     public string? UpdatedBy { get; set; }
 
+    public int? StockQuantity { get; set; }
+
+    public float? Price { get; set; }
+
     public virtual Category Category { get; set; } = null!;
 
     public virtual Manufacturer Manufacturer { get; set; } = null!;

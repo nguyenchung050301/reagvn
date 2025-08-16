@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
-namespace e_commercial.Controllers
+namespace e_commercial.Controllers.Admin
 {
 
     [Route("api/[controller]")]
@@ -20,7 +20,7 @@ namespace e_commercial.Controllers
             _laptopService = laptopService;
         }
 
-       // [Authorize(Roles = RoleEnum.Admin)]
+        [Authorize(Roles = RoleEnum.Admin)]
         [HttpGet("{id}")]
         public IActionResult GetDetailByID(Guid id)
         {            
@@ -28,96 +28,46 @@ namespace e_commercial.Controllers
             return Ok(_laptopService.GetLaptopDetails(id));
         }
 
-        [Authorize]
+        [Authorize (Roles = RoleEnum.Admin)]
         [HttpGet]
         public IActionResult GetAll()
         {
-            try
-            {
-                var token = GetHeaderAuthor();
-                return Ok(_laptopService.GetAllLaptopDetails(token));
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
-           /* catch (BadValidationException ex)
-            {
-                throw new BadValidationException("Token het han", nameof(ex));
-            }*/
+            return Ok(_laptopService.GetAllLaptopDetails());
+    
         }
 
-  //     [Authorize(Roles = RoleEnum.Admin)]
+       [Authorize(Roles = RoleEnum.Admin)]
         [HttpPost]
         public IActionResult Create(LaptopCreateDTO laptopDTO)
         {
-            try
-            {
-                _laptopService.CreateLaptop(laptopDTO);
-                return Created();
-            }
-            catch (ArgumentException ex)
-            {
-                return BadRequest(ex.Message);
-            }         
+
+            _laptopService.CreateLaptop(laptopDTO);
+            return Created();
         }
 
-    //    [Authorize(Roles = RoleEnum.Admin)]
+        [Authorize(Roles = RoleEnum.Admin)]
         [HttpPut("{id}")] 
         public IActionResult Update(LaptopUpdateDTO laptopDTO, Guid id)
         {
-            try
-            {
-                _laptopService.UpdateLaptop(laptopDTO, id);
-                return Ok(laptopDTO);
-            }
-            catch (ArgumentException ex)
-            {
-                return BadRequest(ex.Message);
-            }
+            _laptopService.UpdateLaptop(laptopDTO, id);
+            return Ok(laptopDTO);
         }
 
-      //  [Authorize(Roles = RoleEnum.Admin)]
+        [Authorize(Roles = RoleEnum.Admin)]
         [HttpDelete("{id}")]
         public IActionResult Delete(Guid id)
         {
-            try
-            {
-                _laptopService.DeleteLaptop(id);
-                return NoContent();
-            }
-            catch (ArgumentException ex)
-            {
-                return BadRequest(ex.Message);
-            }
+            _laptopService.DeleteLaptop(id);
+            return NoContent();
         }
 
+        [Authorize(Roles = RoleEnum.Admin)]
         [HttpGet("page")]
         public IActionResult Pagination([FromQuery]PaginationRequestDTO paginationDTO, [FromQuery]string? name)
         {
-            try
-            {
-                return Ok(_laptopService.GetPagination(paginationDTO, name));
-            }
-            catch (BadValidationException ex)
-            {
-                throw new BadValidationException("Ko co san pham", nameof(ex)); 
-            }
+            return Ok(_laptopService.GetPagination(paginationDTO, name));
         }
-
-        [HttpGet("search")]
-        public IActionResult SearchByName([FromQuery] string name)
-        {
-            try
-            {
-                return Ok(_laptopService.SearchByName(name));
-            }
-            catch (BadValidationException ex)
-            {
-                throw new BadValidationException("Khong co san pham", nameof(ex));
-            }
-        }
-        
+ 
         private string GetHeaderAuthor()
         {
             if (Request.Headers.TryGetValue("Authorization", out var header))

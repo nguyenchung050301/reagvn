@@ -1,4 +1,5 @@
-﻿using e_commercial.DTOs.Request.Laptop;
+﻿
+using e_commercial.DTOs.Request.Laptop;
 using e_commercial.DTOs.Request.Pagination;
 using e_commercial.DTOs.Response.Laptop;
 using e_commercial.DTOs.Response.Pagination;
@@ -13,17 +14,21 @@ namespace e_commercial.Services
 {
     public class LaptopService
     {
+        private readonly string productType = "Laptop";
         private readonly ILaptopRepository _laptopRepository;
         private readonly ICategoryRepository _categoryRepository;
         private readonly IManufacturerRepository _manufacturerRepository;
         private readonly JWTService _jwtService;
-        public LaptopService(JWTService jWTService, ILaptopRepository laptopRepository, ICategoryRepository categoryRepository,
-            IManufacturerRepository manufacturerRepository)
+      //  private readonly CartService _cartService;
+
+        public LaptopService(ILaptopRepository laptopRepository, ICategoryRepository categoryRepository,
+            IManufacturerRepository manufacturerRepository, JWTService jwtService)
         {
-            _jwtService = jWTService;
             _laptopRepository = laptopRepository;
             _categoryRepository = categoryRepository;
-            _manufacturerRepository = manufacturerRepository;   
+            _manufacturerRepository = manufacturerRepository;
+         //   _cartService = cartService;
+            _jwtService = jwtService;
         }
         public LaptopDetailDTO GetLaptopDetails(Guid id)
         {
@@ -47,14 +52,14 @@ namespace e_commercial.Services
                 ManufacturerName = laptop.Manufacturer?.ManufacturerName,
             };
         }
-        public IEnumerable<LaptopDetailDTO> GetAllLaptopDetails(string token)
+        public IEnumerable<LaptopDetailDTO> GetAllLaptopDetails()
         {
-            var handler = _jwtService.GetJwtSecurityTokenHandler();
+           /* var handler = _jwtService.GetJwtSecurityTokenHandler();
             if (token.IsNullOrEmpty())
             {
                 throw new BadValidationException("Token ko the null", nameof(token));
             }
-            var tokenReader = handler.ReadToken(token);
+            var tokenReader = handler.ReadToken(token);*/
        
             var laptops = _laptopRepository.GetAll();
             return laptops.Select(laptop => new LaptopDetailDTO
@@ -112,20 +117,20 @@ namespace e_commercial.Services
             {
                 throw new ArgumentNullException("Id cannot be null.");
             }
-            var laptop = _laptopRepository.GetByID(Id);
-            if (laptop == null)
+            var existing = _laptopRepository.GetByID(Id);
+            if (existing == null)
             {
                 throw new ArgumentNullException("Laptop not found.");
             }
-            laptop.LaptopName = laptopUpdateDTO.LaptopName;
-            laptop.LaptopSize = laptopUpdateDTO.LaptopSize;
-            laptop.LaptopDescription = laptopUpdateDTO.LaptopDescription;
-            laptop.LaptopImage = JsonSerializer.Serialize(laptopUpdateDTO.LaptopImage);
-            laptop.CategoryId = laptopUpdateDTO.CategoryId;
-            laptop.ManufacturerId = laptopUpdateDTO.ManufacturerId;
-            laptop.UpdatedAt = DateTime.UtcNow;
-            laptop.UpdatedBy = "System"; // This should be replaced with the actual user ID or name
-            _laptopRepository.Update(laptop);
+            existing.LaptopName = laptopUpdateDTO.LaptopName;
+            existing.LaptopSize = laptopUpdateDTO.LaptopSize;
+            existing.LaptopDescription = laptopUpdateDTO.LaptopDescription;
+            existing.LaptopImage = JsonSerializer.Serialize(laptopUpdateDTO.LaptopImage);
+            existing.CategoryId = laptopUpdateDTO.CategoryId;
+            existing.ManufacturerId = laptopUpdateDTO.ManufacturerId;
+            existing.UpdatedAt = DateTime.UtcNow;
+            existing.UpdatedBy = "System"; // This should be replaced with the actual user ID or name
+            _laptopRepository.Update(existing);
         }
         public void DeleteLaptop(Guid id)
         {
@@ -140,6 +145,7 @@ namespace e_commercial.Services
             }
             _laptopRepository.Delete(laptop);
         }
+
         public PaginationResponseDTO<LaptopItemDTO> GetPagination(PaginationRequestDTO requestDTO, string? name)
         {           
        /*     if (requestDTO.PageNumber < 1)
@@ -170,27 +176,34 @@ namespace e_commercial.Services
             };
 
         }
-
-        //Module đơn giản (ko link vào pagination)
-        public IEnumerable<LaptopItemDTO> SearchByName(string name)
+      /*  public void AddProductToCart(Guid id)
         {
-            if (string.IsNullOrEmpty(name))
+            if (id == Guid.Empty)
             {
-                throw new BadValidationException("Name cannot be null or empty.", nameof(name));
+                throw new BadValidationException("Product ID cannot be empty.", nameof(id));
             }
 
-            var search = _laptopRepository.SearchByName(name);
-             
-           
-
-            return search.Select(p => new LaptopItemDTO
+            var existingProduct = _laptopRepository.GetByID(id);
+            new CartAddProductDTO
             {
-                Id = p.LaptopId,
-                Name = p.LaptopName,
-            }).ToList();
+                ProductId = existingProduct.LaptopId,
+                ProductType = productType,
+                Quantity = 1, // Assuming default quantity is 1 when adding to cart
+                UnitPrice = (float)existingProduct.Price
+            };
+
+            _cartService.AddToCart(new Cart
+            {
+                CartId = Guid.NewGuid().ToString(),
+                ProductId = existingProduct.LaptopId.ToString(),
+                ProductType = productType,
+                Quantity = 1, // Assuming default quantity is 1 when adding to cart
+                UnitPrice = (float)existingProduct.Price
+            });
+        }*/
 
 
-        }
+
 
     }
 }

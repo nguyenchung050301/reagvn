@@ -19,6 +19,8 @@ public partial class ReagvnContext : DbContext
 
     public virtual DbSet<Branch> Branches { get; set; }
 
+    public virtual DbSet<Cart> Carts { get; set; }
+
     public virtual DbSet<Category> Categories { get; set; }
 
     public virtual DbSet<Department> Departments { get; set; }
@@ -30,6 +32,12 @@ public partial class ReagvnContext : DbContext
     public virtual DbSet<Laptop> Laptops { get; set; }
 
     public virtual DbSet<Manufacturer> Manufacturers { get; set; }
+
+    public virtual DbSet<Order> Orders { get; set; }
+
+    public virtual DbSet<Orderdetail> Orderdetails { get; set; }
+
+    public virtual DbSet<Payment> Payments { get; set; }
 
     public virtual DbSet<Refreshtoken> Refreshtokens { get; set; }
 
@@ -84,6 +92,27 @@ public partial class ReagvnContext : DbContext
             entity.HasOne(d => d.User).WithMany(p => p.Branches)
                 .HasForeignKey(d => d.UserId)
                 .HasConstraintName("branches_ibfk_1");
+        });
+
+        modelBuilder.Entity<Cart>(entity =>
+        {
+            entity.HasKey(e => e.CartId).HasName("PRIMARY");
+
+            entity.ToTable("cart");
+
+            entity.Property(e => e.CartId)
+                .HasMaxLength(36)
+                .HasColumnName("cart_id");
+            entity.Property(e => e.ProductId)
+                .HasMaxLength(36)
+                .HasColumnName("product_id");
+            entity.Property(e => e.ProductType)
+                .HasMaxLength(255)
+                .HasColumnName("product_type")
+                .UseCollation("utf8mb3_general_ci")
+                .HasCharSet("utf8mb3");
+            entity.Property(e => e.Quantity).HasColumnName("quantity");
+            entity.Property(e => e.UnitPrice).HasColumnName("unit_price");
         });
 
         modelBuilder.Entity<Category>(entity =>
@@ -236,6 +265,8 @@ public partial class ReagvnContext : DbContext
             entity.Property(e => e.ManufacturerId)
                 .HasMaxLength(36)
                 .HasColumnName("manufacturer_id");
+            entity.Property(e => e.Price).HasColumnName("price");
+            entity.Property(e => e.StockQuantity).HasColumnName("stock_quantity");
             entity.Property(e => e.UpdatedAt)
                 .HasColumnType("datetime")
                 .HasColumnName("updated_at");
@@ -293,6 +324,8 @@ public partial class ReagvnContext : DbContext
             entity.Property(e => e.ManufacturerId)
                 .HasMaxLength(36)
                 .HasColumnName("manufacturer_id");
+            entity.Property(e => e.Price).HasColumnName("price");
+            entity.Property(e => e.StockQuantity).HasColumnName("stock_quantity");
             entity.Property(e => e.UpdatedAt)
                 .HasColumnType("datetime")
                 .HasColumnName("updated_at");
@@ -342,6 +375,125 @@ public partial class ReagvnContext : DbContext
             entity.Property(e => e.UpdatedBy)
                 .HasMaxLength(36)
                 .HasColumnName("updated_by");
+        });
+
+        modelBuilder.Entity<Order>(entity =>
+        {
+            entity.HasKey(e => e.OrderId).HasName("PRIMARY");
+
+            entity.ToTable("orders");
+
+            entity.HasIndex(e => e.UserId, "user_id");
+
+            entity.Property(e => e.OrderId)
+                .HasMaxLength(36)
+                .HasColumnName("order_id");
+            entity.Property(e => e.CancelBy)
+                .HasMaxLength(36)
+                .HasColumnName("cancel_by");
+            entity.Property(e => e.CreatedAt)
+                .HasColumnType("datetime")
+                .HasColumnName("created_at");
+            entity.Property(e => e.OrderStatus)
+                .HasMaxLength(255)
+                .HasColumnName("order_status")
+                .UseCollation("utf8mb3_general_ci")
+                .HasCharSet("utf8mb3");
+            entity.Property(e => e.TotalAmount).HasColumnName("total_amount");
+            entity.Property(e => e.UserId)
+                .HasMaxLength(36)
+                .HasColumnName("user_id");
+
+            entity.HasOne(d => d.User).WithMany(p => p.Orders)
+                .HasForeignKey(d => d.UserId)
+                .HasConstraintName("orders_ibfk_1");
+        });
+
+        modelBuilder.Entity<Orderdetail>(entity =>
+        {
+            entity.HasKey(e => e.OrderDetailId).HasName("PRIMARY");
+
+            entity.ToTable("orderdetail");
+
+            entity.HasIndex(e => e.OrderId, "order_id");
+
+            entity.Property(e => e.OrderDetailId)
+                .HasMaxLength(36)
+                .HasColumnName("order_detail_id");
+            entity.Property(e => e.Address)
+                .HasMaxLength(255)
+                .HasColumnName("address")
+                .UseCollation("utf8mb3_general_ci")
+                .HasCharSet("utf8mb3");
+            entity.Property(e => e.District)
+                .HasMaxLength(255)
+                .HasColumnName("district")
+                .UseCollation("utf8mb3_general_ci")
+                .HasCharSet("utf8mb3");
+            entity.Property(e => e.OrderId)
+                .HasMaxLength(36)
+                .HasColumnName("order_id");
+            entity.Property(e => e.Phone)
+                .HasMaxLength(13)
+                .HasColumnName("phone");
+            entity.Property(e => e.ProductId)
+                .HasMaxLength(36)
+                .HasColumnName("product_id");
+            entity.Property(e => e.ProductType)
+                .HasMaxLength(255)
+                .HasColumnName("product_type")
+                .UseCollation("utf8mb3_general_ci")
+                .HasCharSet("utf8mb3");
+            entity.Property(e => e.Quantity).HasColumnName("quantity");
+            entity.Property(e => e.UnitPrice).HasColumnName("unit_price");
+            entity.Property(e => e.Ward)
+                .HasMaxLength(255)
+                .HasColumnName("ward")
+                .UseCollation("utf8mb3_general_ci")
+                .HasCharSet("utf8mb3");
+
+            entity.HasOne(d => d.Order).WithMany(p => p.Orderdetails)
+                .HasForeignKey(d => d.OrderId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("orderdetail_ibfk_1");
+        });
+
+        modelBuilder.Entity<Payment>(entity =>
+        {
+            entity.HasKey(e => e.PaymentId).HasName("PRIMARY");
+
+            entity.ToTable("payment");
+
+            entity.HasIndex(e => e.OrderId, "fk1");
+
+            entity.HasIndex(e => e.UserId, "fk2");
+
+            entity.Property(e => e.PaymentId)
+                .HasMaxLength(36)
+                .HasColumnName("payment_id");
+            entity.Property(e => e.CreatedAt)
+                .HasColumnType("datetime")
+                .HasColumnName("created_at");
+            entity.Property(e => e.OrderId)
+                .HasMaxLength(36)
+                .HasColumnName("order_id");
+            entity.Property(e => e.PaymentPrice).HasColumnName("payment_price");
+            entity.Property(e => e.PaymentType)
+                .HasMaxLength(255)
+                .HasColumnName("payment_type")
+                .UseCollation("utf8mb3_general_ci")
+                .HasCharSet("utf8mb3");
+            entity.Property(e => e.UserId)
+                .HasMaxLength(36)
+                .HasColumnName("user_id");
+
+            entity.HasOne(d => d.Order).WithMany(p => p.Payments)
+                .HasForeignKey(d => d.OrderId)
+                .HasConstraintName("fk1");
+
+            entity.HasOne(d => d.User).WithMany(p => p.Payments)
+                .HasForeignKey(d => d.UserId)
+                .HasConstraintName("fk2");
         });
 
         modelBuilder.Entity<Refreshtoken>(entity =>
