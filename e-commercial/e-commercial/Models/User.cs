@@ -34,4 +34,8 @@ public partial class User
     public string? UserEmail { get; set; }
 
     public virtual ICollection<Branch> Branches { get; set; } = new List<Branch>();
+
+    public virtual ICollection<Order> Orders { get; set; } = new List<Order>();
+
+    public virtual ICollection<Payment> Payments { get; set; } = new List<Payment>();
 }

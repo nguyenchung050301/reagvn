@@ -12,3 +12,11 @@ openssl genrsa -out private.key 2048
 # Tạo public key từ private key
 openssl rsa -in private.key -pubout -out public.key
 ```
+
+
+```
+SEARCH ALL PRODUCTS:
+ko authorize, ten sp, loai sp, minPrice, maxPrice, branch, 
+keyboard: switch  
+laptop: size
+```

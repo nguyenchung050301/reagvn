@@ -45,6 +45,18 @@ namespace e_commercial.Services
             user.UserEmail = userDTO.UserEmail;
             _userRepository.Add(user); 
         }
+        public User LoadByUserId(string userId)
+        {
+            //check login
+            var check = _userRepository.GetAll().FirstOrDefault(p => p.UserId == userId);
+            if (check == null)
+            {
+                throw new BadValidationException("Khong tim thay tai khoan", nameof(userId));
+            }
+            return check;
+        }
+
+
         public User LoadByUserName(UserLoginDTO userDTO)
         {
             //check login

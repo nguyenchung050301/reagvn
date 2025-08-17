@@ -2,6 +2,7 @@
 *.mdf
 *.ldf
 *.key
+*.pem
 **/obj
 **/.vs
 **/bin

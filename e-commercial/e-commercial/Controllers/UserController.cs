@@ -1,7 +1,9 @@
 ﻿using e_commercial.Constants;
+using e_commercial.DTOs.Request.Pagination;
 using e_commercial.DTOs.Request.User;
 using e_commercial.Exceptions;
 using e_commercial.Services;
+using e_commercial.Services.ParentService;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -13,10 +15,12 @@ namespace e_commercial.Controllers
     {
         private readonly UserService _userService;
         private readonly JWTService _jwtService;
-        public UserController(UserService userService, JWTService jwtService)
+        private readonly ProductService _productService;
+        public UserController(UserService userService, JWTService jwtService, ProductService productService)
         {
             _userService = userService;
             _jwtService = jwtService;
+            _productService = productService;
         }
         /// <summary>
         /// dang ky: ten tai khoan co the nhap sdt hoac email
@@ -37,6 +41,12 @@ namespace e_commercial.Controllers
 
             }
         }
-      
+
+        [HttpPost("product/search")]
+        public IActionResult SearchProduct([FromBody] ProductPaginationRequestDTO requestDTO)
+        {
+            var result = _productService.GetPagination(requestDTO);
+            return Ok(result); 
+        }
     }
 }
