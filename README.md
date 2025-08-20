@@ -1,4 +1,9 @@
 # reagvn
+
+**0.1.7**
+-  Add Product Filter by name, category, min price & max price, branch.
+-  Add Product model & DTOs.
+
 **0.1.6**
 - Add feature:
   - Payment: pay an order.
