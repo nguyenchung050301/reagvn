@@ -2,6 +2,7 @@
 using e_commercial.Data;
 using e_commercial.DTOs.Request.Laptop;
 using e_commercial.DTOs.Request.Pagination;
+using e_commercial.DTOs.Request.Product;
 using e_commercial.DTOs.Response.Laptop;
 using e_commercial.DTOs.Response.Pagination;
 using e_commercial.Exceptions;
@@ -175,34 +176,21 @@ namespace e_commercial.Services
             };
 
         }
-      /*  public void AddProductToCart(Guid id)
+        
+        public IEnumerable<LaptopDetailDTO> ProductFilter(LaptopProductFilterDTO requestDTO)
         {
-            if (id == Guid.Empty)
+            var item = _laptopRepository.Filter(requestDTO.size, requestDTO.minPrice, requestDTO.maxPrice, requestDTO.manufacturerName);
+            return item.Select(p => new LaptopDetailDTO
             {
-                throw new BadValidationException("Product ID cannot be empty.", nameof(id));
-            }
-
-            var existingProduct = _laptopRepository.GetByID(id);
-            new CartAddProductDTO
-            {
-                ProductId = existingProduct.LaptopId,
-                ProductType = productType,
-                Quantity = 1, // Assuming default quantity is 1 when adding to cart
-                UnitPrice = (float)existingProduct.Price
-            };
-
-            _cartService.AddToCart(new Cart
-            {
-                CartId = Guid.NewGuid().ToString(),
-                ProductId = existingProduct.LaptopId.ToString(),
-                ProductType = productType,
-                Quantity = 1, // Assuming default quantity is 1 when adding to cart
-                UnitPrice = (float)existingProduct.Price
+                LaptopName = p.LaptopName,
+                LaptopDescription = p.LaptopDescription,
+                LaptopImage = p.LaptopImage,
+                LaptopSize = p.LaptopSize,
+                LaptopPrice = p.Price,
+                CategoryName = p.Category.CategoryName,
+                ManufacturerName = p.Manufacturer.ManufacturerName,
             });
-        }*/
 
-
-
-
+        }
     }
 }

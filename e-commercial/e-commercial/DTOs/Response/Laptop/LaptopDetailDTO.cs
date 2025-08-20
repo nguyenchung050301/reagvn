@@ -6,6 +6,8 @@ namespace e_commercial.DTOs.Response.Laptop
     {
         public string? LaptopName { get; set; }
         public float? LaptopSize { get; set; }
+        public float? LaptopPrice { get; set; }   
+
         public string? LaptopDescription { get; set; }
 
         public string? LaptopImage { get; set; }

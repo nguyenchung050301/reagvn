@@ -56,7 +56,7 @@ builder.Services.AddScoped<ProductService>();
 builder.Services.AddScoped<KeyboardService>();
 
 builder.Services.AddScoped<LaptopService>();
-
+builder.Services.AddScoped<MailService>();
 builder.Services.AddDbContext<ReagvnContext>(options =>
     options.UseMySql(
         builder.Configuration.GetConnectionString("MySQLConnection"),

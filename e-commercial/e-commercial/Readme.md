@@ -20,3 +20,7 @@ ko authorize, ten sp, loai sp, minPrice, maxPrice, branch,
 keyboard: switch  
 laptop: size
 ```
+
+```
+app password: urhldlniwvhoqcmy
+```

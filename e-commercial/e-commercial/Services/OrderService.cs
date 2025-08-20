@@ -18,14 +18,15 @@ namespace e_commercial.Services
         private readonly IOrderRepository _orderRepository;
         private readonly IOrderDetailRepository _orderDetailRepository;
         private readonly IKeyboardRepository _keyboardRepository;
-
+        private readonly MailService _mailService;
         private IEnumerable<(string, ProductTypeEnum, float, int)> validatedProducts;
         public OrderService(IOrderRepository orderRepository, IKeyboardRepository keyboardRepository,
-            IOrderDetailRepository orderDetailRepository)
+            IOrderDetailRepository orderDetailRepository, MailService mailService)
         {
             _orderRepository = orderRepository;
             _keyboardRepository = keyboardRepository;
             _orderDetailRepository = orderDetailRepository;
+            _mailService = mailService;
         }
 
         public PaginationResponseDTO<OrderItemDTO>  GetPagination(OrderPaginationRequestDTO requestDTO)
@@ -157,17 +158,16 @@ namespace e_commercial.Services
             };
             _orderRepository.Add(order);
 
-
-     
-           
             foreach (var item in dicts)
             {
                 //Tuple: // (string, ProductTypeEnum, float, int) -> productId, productType ,price, quantity
                 validatedProducts = ValidateProducts(item.Key, item.Value);
+
                 order.TotalAmount = (int)validatedProducts.Sum(p => p.Item3 * p.Item4);
             }
 
-           // IEnumerable<Orderdetail> orderDetails = new List<Orderdetail>();
+            List<Orderdetail> orderDetails_Mail = new List<Orderdetail>();
+            
             foreach (var item in validatedProducts)
             {
                 var orderDetail = new Orderdetail();
@@ -187,15 +187,20 @@ namespace e_commercial.Services
                     orderDetail.Phone = user.UserPhone;
                 }
                 FillIntoOrderDetail(ref orderDetail, item.Item1, item.Item2, item.Item3, item.Item4);
+                //Mail
+                orderDetails_Mail.Append(orderDetail);
+                //
                 _orderDetailRepository.Add(orderDetail);
             }
 
+            //Mail
+            _mailService.SendOrderMailAsync(user.UserShownname, user.UserEmail, orderId);
 
 
 
         }
 
-   
+
         private IEnumerable<(string, ProductTypeEnum, float, int)> ValidateProducts(ProductTypeEnum type, IEnumerable<OrderCreateDTO.CartItemDTO> cartItems)
         {
             switch (type)
@@ -208,6 +213,9 @@ namespace e_commercial.Services
                             throw new BadValidationException("Some keyboard IDs are invalid.");
                         }
 
+                        //Mail
+                        _mailService.AddProduct(foundProducts.Select(item => (item.KeyboardName, ProductTypeEnum.Keyboard, (float)item.Price,
+                                cartItems.FirstOrDefault(p => p.ProductId == item.KeyboardId).Quantity)).ToList());
 
                         return foundProducts.Select(item => (item.KeyboardId, ProductTypeEnum.Keyboard, (float)item.Price,
                                 cartItems.FirstOrDefault(p => p.ProductId == item.KeyboardId).Quantity)).ToList();

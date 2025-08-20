@@ -1,4 +1,5 @@
-﻿using e_commercial.Data;
+﻿using e_commercial.Constants;
+using e_commercial.Data;
 using e_commercial.DTOs.Request;
 using e_commercial.DTOs.Request.Pagination;
 using e_commercial.DTOs.Response.Pagination;
@@ -35,6 +36,39 @@ namespace e_commercial.Repositories
             _dbSet.Remove(laptop);
             _context.SaveChanges();
         }
+
+        public IQueryable<Laptop> Filter(LaptopSizeEnum? size, int? minPrice, int? maxPrice, string? manufacturerName)
+        {
+             if (size == null && minPrice == null && maxPrice == null && manufacturerName == null)
+             {
+                return _dbSet.AsQueryable();
+             }
+            var query = _dbSet.Include(p => p.Manufacturer).AsQueryable();
+
+            if (size != null)
+            {
+                int sizeFromSubstring = int.Parse(size.ToString().Substring("Inch".Length).Trim()); 
+                //Ex: from LaptopSizeEnum -> Inch24 -> 24
+
+                query = query.Where(p => p.LaptopSize == sizeFromSubstring);
+            }
+
+            if (minPrice != null && maxPrice != null)
+            {
+                query = query.Where(p => p.Price >= minPrice && p.Price <= maxPrice);
+            }
+
+            if (manufacturerName != null)
+            {
+                query = query.Where(p => p.Manufacturer.ManufacturerName.Contains(manufacturerName));
+            }
+
+
+
+                
+            return query;
+        }
+
         public IEnumerable<Laptop> GetAll()
         {
             return _dbSet.Include(p => p.Category).Include(p => p.Manufacturer).ToList();
@@ -76,6 +110,7 @@ namespace e_commercial.Repositories
             return _dbSet.Where(p => p.LaptopName.Contains(name)).OrderBy(p => p.LaptopName); ;
         }
 
+
         public void Update(Laptop laptop)
         {
             _dbSet.Update(laptop);
@@ -90,5 +125,6 @@ namespace e_commercial.Repositories
             }
             return existing;
         }
+
     }
 }
