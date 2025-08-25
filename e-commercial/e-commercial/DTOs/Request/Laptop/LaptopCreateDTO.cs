@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using e_commercial.Constants;
+using System.ComponentModel.DataAnnotations;
 
 namespace e_commercial.DTOs.Request.Laptop
 {
@@ -10,12 +11,15 @@ namespace e_commercial.DTOs.Request.Laptop
         public string? LaptopName { get; set; }
         [Required]
         [Range(0, 100)]
-        public float? LaptopSize { get; set; }
+        public LaptopSizeEnum? LaptopSize { get; set; }
         [Required]
         [StringLength(255)]
         public string? LaptopDescription { get; set; }
 
         public List<string>? LaptopImage { get; set; }
+        public int? StockQuantity { get; set; }
+
+        public float? Price { get; set; }
         [Required]
         public string CategoryId { get; set; }
         [Required]

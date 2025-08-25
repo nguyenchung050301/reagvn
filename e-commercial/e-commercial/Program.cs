@@ -1,21 +1,16 @@
 using e_commercial.Data;
-using e_commercial.Exceptions;
-using e_commercial.Middleware;
+using e_commercial.Mapping;
 using e_commercial.Repositories;
 using e_commercial.Repositories.Interfaces;
 using e_commercial.Services;
+using e_commercial.Services.Interfaces;
 using e_commercial.Services.ParentService;
-using e_commercial.Services.ServiceFactory;
-using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Formatters;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
-using System;
 using System.Security.Cryptography;
-using System.Text;
 using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -55,8 +50,24 @@ builder.Services.AddScoped<OrderService>();
 builder.Services.AddScoped<ProductService>();
 builder.Services.AddScoped<KeyboardService>();
 
-builder.Services.AddScoped<LaptopService>();
+builder.Services.AddScoped<ILaptopService, LaptopService>();
 builder.Services.AddScoped<MailService>();
+
+
+builder.Services.AddAutoMapper(cfg =>
+{
+    cfg.AddProfile<LaptopMappingProfile>();
+});
+builder.Services.AddAutoMapper(cfg =>
+{
+    cfg.AddProfile<UserMappingProfile>();
+});
+
+
+
+
+
+
 builder.Services.AddDbContext<ReagvnContext>(options =>
     options.UseMySql(
         builder.Configuration.GetConnectionString("MySQLConnection"),

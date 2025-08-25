@@ -17,6 +17,9 @@ namespace e_commercial.DTOs.Request.Keyboard
 
         public string? KeyboardImage { get; set; }
 
+        public int? StockQuantity { get; set; }
+
+        public float? Price { get; set; }
         public string? CategoryId { get; set; }
 
         public string? ManufacturerId { get; set; }

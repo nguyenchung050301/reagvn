@@ -14,5 +14,8 @@
         public string? CategoryName { get; set; }   
 
         public string? ManufacturerName { get; set; }
+        public int? StockQuantity { get; set; }
+
+        public float? Price { get; set; }
     }
 }

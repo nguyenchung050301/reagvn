@@ -1,4 +1,6 @@
 ﻿
+using AutoMapper;
+using e_commercial.Constants;
 using e_commercial.Data;
 using e_commercial.DTOs.Request.Laptop;
 using e_commercial.DTOs.Request.Pagination;
@@ -9,26 +11,30 @@ using e_commercial.Exceptions;
 using e_commercial.Models;
 using e_commercial.Repositories;
 using e_commercial.Repositories.Interfaces;
+using e_commercial.Services.Interfaces;
 using e_commercial.Services.ParentService;
 using Microsoft.IdentityModel.Tokens;
 using System.Text.Json;
 
 namespace e_commercial.Services
 {
-    public class LaptopService
+    public class LaptopService : ILaptopService
     {
+        private readonly IMapper _mapper;
         private readonly string productType = "Laptop";
         private readonly ILaptopRepository _laptopRepository;
-        private readonly JWTService _jwtService;
+
         //  private readonly CartService _cartService;
         protected readonly IManufacturerRepository _manufacturerRepository;
         protected readonly ICategoryRepository _categoryRepository;
         public LaptopService(ReagvnContext context, ILaptopRepository laptopRepository, ICategoryRepository categoryRepository,
-            IManufacturerRepository manufacturerRepository, JWTService jwtService)
+            IManufacturerRepository manufacturerRepository, IMapper mapper)
         {
             _laptopRepository = laptopRepository;
-         //   _cartService = cartService;
-            _jwtService = jwtService;
+            _manufacturerRepository = manufacturerRepository;
+            _categoryRepository = categoryRepository;
+            _mapper = mapper;
+
         }
         public LaptopDetailDTO GetLaptopDetails(Guid id)
         {
@@ -41,16 +47,19 @@ namespace e_commercial.Services
             {
                 throw new KeyNotFoundException($"Laptop with ID {id} not found.");
             }
-            return new LaptopDetailDTO
-            {
 
-                LaptopName = laptop.LaptopName,
-                LaptopSize = laptop.LaptopSize,
-                LaptopDescription = laptop.LaptopDescription,
-                LaptopImage = laptop.LaptopImage,
-                CategoryName = laptop.Category?.CategoryName,
-                ManufacturerName = laptop.Manufacturer?.ManufacturerName,
-            };
+            return _mapper.Map<LaptopDetailDTO>(laptop);
+
+            /* return new LaptopDetailDTO
+             {
+
+                 LaptopName = laptop.LaptopName,
+                 LaptopSize = laptop.LaptopSize,
+                 LaptopDescription = laptop.LaptopDescription,
+                 LaptopImage = laptop.LaptopImage,
+                 CategoryName = laptop.Category?.CategoryName,
+                 ManufacturerName = laptop.Manufacturer?.ManufacturerName,
+             };*/
         }
         public IEnumerable<LaptopDetailDTO> GetAllLaptopDetails()
         {
@@ -62,7 +71,7 @@ namespace e_commercial.Services
             var tokenReader = handler.ReadToken(token);*/
        
             var laptops = _laptopRepository.GetAll();
-            return laptops.Select(laptop => new LaptopDetailDTO
+           /* return laptops.Select(laptop => new LaptopDetailDTO
             {
                 LaptopName = laptop.LaptopName,
                 LaptopSize = laptop.LaptopSize,
@@ -70,7 +79,9 @@ namespace e_commercial.Services
                 LaptopImage = laptop.LaptopImage,
                 CategoryName = laptop.Category?.CategoryName,
                 ManufacturerName = laptop.Manufacturer?.ManufacturerName,
-            });
+            });*/
+
+            return _mapper.Map<IEnumerable<LaptopDetailDTO>>(laptops);
         }
 
         /// <summary>
@@ -96,18 +107,22 @@ namespace e_commercial.Services
                 throw new BadValidationException("CategoryId cannot be null.", nameof(category));
             }
 
-            var laptop = new Laptop
-            {
-                LaptopId = Guid.NewGuid().ToString(),
-                LaptopName = laptopDTO.LaptopName,
-                LaptopSize = laptopDTO.LaptopSize,
-                LaptopDescription = laptopDTO.LaptopDescription,
-                LaptopImage = JsonSerializer.Serialize(laptopDTO.LaptopImage),
-                CategoryId = laptopDTO.CategoryId,
-                ManufacturerId = laptopDTO.ManufacturerId,
-                CreatedAt = DateTime.UtcNow,
-                CreatedBy = "System", // This should be replaced with the actual user ID or name
-            };
+            /* var laptop = new Laptop
+             {
+                 LaptopId = Guid.NewGuid().ToString(),
+                 LaptopName = laptopDTO.LaptopName,
+                 LaptopSize = laptopDTO.LaptopSize,
+                 LaptopDescription = laptopDTO.LaptopDescription,
+                 LaptopImage = JsonSerializer.Serialize(laptopDTO.LaptopImage),
+                 CategoryId = laptopDTO.CategoryId,
+                 ManufacturerId = laptopDTO.ManufacturerId,
+                 CreatedAt = DateTime.UtcNow,
+                 CreatedBy = "System", // This should be replaced with the actual user ID or name
+             };*/
+            var laptop = _mapper.Map<Laptop>(laptopDTO);
+            laptop.LaptopId = Guid.NewGuid().ToString();
+            laptop.CreatedAt = DateTime.UtcNow;
+            laptop.CreatedBy = RoleEnum.Admin;
             _laptopRepository.Add(laptop);
 
         }
@@ -122,14 +137,17 @@ namespace e_commercial.Services
             {
                 throw new ArgumentNullException("Laptop not found.");
             }
-            existing.LaptopName = laptopUpdateDTO.LaptopName;
-            existing.LaptopSize = laptopUpdateDTO.LaptopSize;
-            existing.LaptopDescription = laptopUpdateDTO.LaptopDescription;
-            existing.LaptopImage = JsonSerializer.Serialize(laptopUpdateDTO.LaptopImage);
-            existing.CategoryId = laptopUpdateDTO.CategoryId;
-            existing.ManufacturerId = laptopUpdateDTO.ManufacturerId;
-            existing.UpdatedAt = DateTime.UtcNow;
-            existing.UpdatedBy = "System"; // This should be replaced with the actual user ID or name
+            /*            existing.LaptopName = laptopUpdateDTO.LaptopName;
+                        existing.LaptopSize = laptopUpdateDTO.LaptopSize;
+                        existing.LaptopDescription = laptopUpdateDTO.LaptopDescription;
+                        existing.LaptopImage = JsonSerializer.Serialize(laptopUpdateDTO.LaptopImage);
+                        existing.CategoryId = laptopUpdateDTO.CategoryId;
+                        existing.ManufacturerId = laptopUpdateDTO.ManufacturerId;
+                        existing.UpdatedAt = DateTime.UtcNow;
+                        existing.UpdatedBy = "System"; // This should be replaced with the actual user ID or name*/
+            var laptop = _mapper.Map<Laptop>(existing);
+            laptop.UpdatedBy = RoleEnum.Admin;
+            laptop.UpdatedAt = DateTime.UtcNow;
             _laptopRepository.Update(existing);
         }
         public void DeleteLaptop(Guid id)

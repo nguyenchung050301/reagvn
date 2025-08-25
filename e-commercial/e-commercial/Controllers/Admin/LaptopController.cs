@@ -4,6 +4,7 @@ using e_commercial.DTOs.Request.Pagination;
 using e_commercial.DTOs.Request.Product;
 using e_commercial.Exceptions;
 using e_commercial.Services;
+using e_commercial.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -15,8 +16,8 @@ namespace e_commercial.Controllers.Admin
     [ApiController]
     public class LaptopController : ControllerBase
     {
-        private readonly LaptopService _laptopService;
-        public LaptopController(LaptopService laptopService)
+        private readonly ILaptopService _laptopService;
+        public LaptopController(ILaptopService laptopService)
         {
             _laptopService = laptopService;
         }

@@ -5,14 +5,17 @@ using e_commercial.Exceptions;
 using e_commercial.Constants;
 using e_commercial.Repositories.Interfaces;
 using e_commercial.DTOs.Request.User;
+using AutoMapper;
 namespace e_commercial.Services
 {
     public class UserService
     {
+        private readonly IMapper _mapper;
         private readonly IUserRepository _userRepository;
-        public UserService(IUserRepository userRepository)
+        public UserService(IUserRepository userRepository, IMapper mapper)
         {
             _userRepository = userRepository;
+            _mapper = mapper;
         }
         public void Register(UserCreateDTO userDTO)
         {
@@ -22,17 +25,18 @@ namespace e_commercial.Services
             {
                 throw new InvalidOperationException($"Username {userDTO.Username} already exists.");
             }
-            User user = new User();
+
             if (!IsPhoneNumber(userDTO.Username))
             {
                throw new BadValidationException("Not a valid phone number format.", nameof(userDTO.Username));
             }
+
             if (!IsEmail(userDTO.UserEmail))
             {
                 throw new BadValidationException("Not a valid email format.", nameof(userDTO.UserEmail));
             }
             //
-            user.UserId = Guid.NewGuid().ToString();
+          /*  user.UserId = Guid.NewGuid().ToString();
             user.Username = userDTO.Username;
             string hashedPassword = hashPassword(userDTO.Userpassword);
             user.Userpassword = hashedPassword;
@@ -42,7 +46,11 @@ namespace e_commercial.Services
             user.UserWard = userDTO.UserWard;
             user.UserAddress = userDTO.UserAddress;
             user.UserPhone = user.Username;
-            user.UserEmail = userDTO.UserEmail;
+            user.UserEmail = userDTO.UserEmail;*/
+            var user = _mapper.Map<User>(userDTO);
+            user.UserId = Guid.NewGuid().ToString();
+            user.Userpassword = hashPassword(user.Userpassword);
+            user.CreatedAt = DateTime.UtcNow;
             _userRepository.Add(user); 
         }
         public User LoadByUserId(string userId)
