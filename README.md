@@ -1,4 +1,8 @@
 # reagvn
+**0.1.8**
+- Add send email after ordering.
+- Add some automap dtos.
+- Add some basic unit tests.
 
 **0.1.7**
 -  Add Product Filter by name, category, min price & max price, branch.
