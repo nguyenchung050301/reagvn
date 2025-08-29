@@ -44,7 +44,14 @@ public partial class ReagvnContext : DbContext
     public virtual DbSet<User> Users { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        => optionsBuilder.UseMySql("name=ConnectionStrings:MySQLConnection", Microsoft.EntityFrameworkCore.ServerVersion.Parse("8.0.42-mysql"));
+    {
+        // Only configure if not already configured (for cases where Program.cs doesn't inject configuration)
+        if (!optionsBuilder.IsConfigured)
+        {
+            optionsBuilder.UseMySql("Server=localhost;Database=gearvn_test;User=root;Password=password;", 
+                Microsoft.EntityFrameworkCore.ServerVersion.Parse("8.0.42-mysql"));
+        }
+    }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

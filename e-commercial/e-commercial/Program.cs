@@ -69,11 +69,22 @@ builder.Services.AddAutoMapper(cfg =>
 
 
 builder.Services.AddDbContext<ReagvnContext>(options =>
-    options.UseMySql(
-        builder.Configuration.GetConnectionString("MySQLConnection"),
-        ServerVersion.AutoDetect(builder.Configuration.GetConnectionString("MySQLConnection"))
-    )
-);
+{
+    var connectionString = builder.Configuration.GetConnectionString("MySQLConnection");
+    
+    // Check if we're in test environment
+    if (builder.Environment.IsEnvironment("Test"))
+    {
+        options.UseInMemoryDatabase("TestDatabase");
+    }
+    else
+    {
+        options.UseMySql(
+            connectionString,
+            ServerVersion.AutoDetect(connectionString)
+        );
+    }
+});
 
 builder.Services.Configure<ApiBehaviorOptions>(options =>
 {
