@@ -31,12 +31,10 @@ namespace e_commercial.Tests
                 var fakeResult = new List<LaptopDetailDTO>
                 {
                     new LaptopDetailDTO { LaptopName = "asd", LaptopPrice = 2000 },
-                    new LaptopDetailDTO { LaptopName = "assssd", LaptopPrice = 200000 }
                 }.AsEnumerable();
 
                 // Giả lập service trả về fakeResult khi gọi ProductFilter
-                mockService.Setup(s => s.ProductFilter(It.IsAny<LaptopProductFilterDTO>()))
-                               .Returns(fakeResult);
+           
 
                 var controller = new LaptopController(mockService.Object);
 
@@ -47,8 +45,11 @@ namespace e_commercial.Tests
                     maxPrice = 2000
                 };
 
-                // Act
-                var result = controller.Filter(filterDto);
+            mockService.Setup(s => s.ProductFilter(It.Is<LaptopProductFilterDTO>(p => p == filterDto)))
+                      .Returns(fakeResult);
+
+            // Act
+            var result = controller.Filter(filterDto);
 
                 // Assert
                 var okResult = Assert.IsType<OkObjectResult>(result);

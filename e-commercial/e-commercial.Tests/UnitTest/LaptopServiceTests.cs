@@ -39,7 +39,7 @@ namespace e_commercial.Tests
         [Fact]
         public void CreateLaptop_CallsRepository_ValidInput()
         {
-            var dto = new LaptopCreateDTO
+            LaptopCreateDTO dto = new LaptopCreateDTO
             {
                 LaptopName = "Dell",
                 Price = 2000,
@@ -61,11 +61,11 @@ namespace e_commercial.Tests
                 CategoryId = dto.CategoryId,
                 ManufacturerId = dto.ManufacturerId,
             };
-          
-            _mockMapper.Setup(m => m.Map<Laptop>(It.IsAny<LaptopCreateDTO>())).Returns(mappedEntity);
+
+            _mockMapper.Setup(m => m.Map<Laptop>(It.Is<LaptopCreateDTO>(e => e == dto))).Returns(mappedEntity);
 
             _service.CreateLaptop(dto);
-            _mockMapper.Verify(m => m.Map<Laptop>((It.IsAny<LaptopCreateDTO>())), Times.Once);
+            _mockMapper.Verify(m => m.Map<Laptop>(It.IsAny<LaptopCreateDTO>()), Times.Once);
             _mockLaptopRepo.Verify(r => r.Add(mappedEntity), Times.Once);
 
         }

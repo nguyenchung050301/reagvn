@@ -46,7 +46,7 @@ namespace e_commercial.Services
             {
                 new Claim(ClaimTypes.PrimarySid, user.UserId), //Jti: Unique identifier for the token
                 new Claim(JwtRegisteredClaimNames.Sub, user.Username), //nhúng data vào token với kiểu claimtype
-                new Claim(ClaimTypes.Role, user.UserRole), //cần xem lại chỗ này
+                new Claim(ClaimTypes.Role, user.UserRole),
             };
 
 
