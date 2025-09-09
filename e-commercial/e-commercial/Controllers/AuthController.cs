@@ -16,9 +16,9 @@ namespace e_commercial.Controllers
         private readonly RefreshTokenService _refreshTokenService;
         private readonly JWTService _jwtService;
         private readonly UserService _userService;
-        public AuthController(RefreshTokenService refreshTokenService, JWTService jWTService, UserService userService)
+        public AuthController(JWTService jWTService, UserService userService)
         {
-            _refreshTokenService = refreshTokenService;
+
             _jwtService = jWTService;
             _userService = userService;
         }

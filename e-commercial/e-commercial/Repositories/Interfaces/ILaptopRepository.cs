@@ -1,4 +1,5 @@
-﻿using e_commercial.DTOs.Request;
+﻿using e_commercial.Constants;
+using e_commercial.DTOs.Request;
 using e_commercial.DTOs.Request.Pagination;
 using e_commercial.DTOs.Response.Pagination;
 using e_commercial.Models;
@@ -15,5 +16,6 @@ namespace e_commercial.Repositories.Interfaces
         void Delete(Laptop laptop);
         (IQueryable<Laptop>,int) GetPagination(int pageNumber, int pageSize, string? name);
         IQueryable<Laptop> SearchByName(string name);
+        IQueryable<Laptop> Filter(LaptopSizeEnum? size, int? minPrice, int? maxPrice, string? manufacturer);
     }
 }

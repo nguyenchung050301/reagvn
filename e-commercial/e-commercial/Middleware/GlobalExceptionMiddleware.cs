@@ -19,16 +19,11 @@ namespace e_commercial.Middleware
             try
             {
                 await _next(context);
-
-          
-         
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Unhandled exception");
                 await HandlingException(context, ex);
-
-
             }
         }
         private Task HandlingException(HttpContext context, Exception ex)

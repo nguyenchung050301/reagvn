@@ -1,4 +1,5 @@
-﻿using e_commercial.Constants;
+﻿using AutoMapper;
+using e_commercial.Constants;
 using e_commercial.DTOs.Request.Order;
 using e_commercial.DTOs.Request.Pagination;
 using e_commercial.DTOs.Response.Order;
@@ -15,17 +16,20 @@ namespace e_commercial.Services
 {
     public class OrderService
     {
+        private readonly IMapper _mapper;
         private readonly IOrderRepository _orderRepository;
         private readonly IOrderDetailRepository _orderDetailRepository;
         private readonly IKeyboardRepository _keyboardRepository;
-
+        private readonly MailService _mailService;
         private IEnumerable<(string, ProductTypeEnum, float, int)> validatedProducts;
         public OrderService(IOrderRepository orderRepository, IKeyboardRepository keyboardRepository,
-            IOrderDetailRepository orderDetailRepository)
+            IOrderDetailRepository orderDetailRepository, MailService mailService, IMapper mapper)
         {
+            _mapper = mapper;
             _orderRepository = orderRepository;
             _keyboardRepository = keyboardRepository;
             _orderDetailRepository = orderDetailRepository;
+            _mailService = mailService;
         }
 
         public PaginationResponseDTO<OrderItemDTO>  GetPagination(OrderPaginationRequestDTO requestDTO)
@@ -49,7 +53,7 @@ namespace e_commercial.Services
 
         public void AprroveOrder(Guid orderId)
         {
-            var existing = _orderRepository.GetByID(orderId); Console.WriteLine(existing.ToString());
+            var existing = _orderRepository.GetByID(orderId); 
             var products = _orderDetailRepository.GetProductsByOrderID(orderId);
             if (existing == null)
             {
@@ -146,7 +150,12 @@ namespace e_commercial.Services
                 }
                 return results;
             }*/
-            var order = new Order
+            var order = _mapper.Map<Order>(orderDTO);
+            order.OrderStatus = OrderStatusEnum.Pending.ToString();
+            order.CreatedAt = DateTime.Now;
+            order.OrderId = orderId;
+            order.UserId = user.UserId;
+          /*  var order = new Order
             {
                 OrderId = orderId,
 
@@ -154,23 +163,21 @@ namespace e_commercial.Services
                 CreatedAt = DateTime.UtcNow,
                 UserId = user.UserId,
                 // Map other properties as needed
-            };
+            };*/
             _orderRepository.Add(order);
 
-
-     
-           
             foreach (var item in dicts)
             {
                 //Tuple: // (string, ProductTypeEnum, float, int) -> productId, productType ,price, quantity
                 validatedProducts = ValidateProducts(item.Key, item.Value);
-                order.TotalAmount = (int)validatedProducts.Sum(p => p.Item3 * p.Item4);
             }
-
-           // IEnumerable<Orderdetail> orderDetails = new List<Orderdetail>();
+            order.TotalAmount = (int)validatedProducts.Sum(p => p.Item3 * p.Item4);
+            List<Orderdetail> orderDetails_Mail = new List<Orderdetail>();
+            
             foreach (var item in validatedProducts)
             {
-                var orderDetail = new Orderdetail();
+                var orderDetail = _mapper.Map<Orderdetail>(item);
+           //     var orderDetail = new Orderdetail();
                 orderDetail.OrderId = orderId;
                 if (user.UserId == null)
                 {
@@ -187,15 +194,20 @@ namespace e_commercial.Services
                     orderDetail.Phone = user.UserPhone;
                 }
                 FillIntoOrderDetail(ref orderDetail, item.Item1, item.Item2, item.Item3, item.Item4);
+                //Mail
+                orderDetails_Mail.Append(orderDetail);
+                //
                 _orderDetailRepository.Add(orderDetail);
             }
 
+            //Mail
+            _mailService.SendOrderMailAsync(user.UserShownname, user.UserEmail, orderId);
 
 
 
         }
 
-   
+
         private IEnumerable<(string, ProductTypeEnum, float, int)> ValidateProducts(ProductTypeEnum type, IEnumerable<OrderCreateDTO.CartItemDTO> cartItems)
         {
             switch (type)
@@ -208,6 +220,9 @@ namespace e_commercial.Services
                             throw new BadValidationException("Some keyboard IDs are invalid.");
                         }
 
+                        //Mail
+                        _mailService.AddProduct(foundProducts.Select(item => (item.KeyboardName, ProductTypeEnum.Keyboard, (float)item.Price,
+                                cartItems.FirstOrDefault(p => p.ProductId == item.KeyboardId).Quantity)).ToList());
 
                         return foundProducts.Select(item => (item.KeyboardId, ProductTypeEnum.Keyboard, (float)item.Price,
                                 cartItems.FirstOrDefault(p => p.ProductId == item.KeyboardId).Quantity)).ToList();

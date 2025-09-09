@@ -9,7 +9,7 @@ public partial class Laptop
 
     public string? LaptopName { get; set; }
 
-    public float? LaptopSize { get; set; }
+    public int? LaptopSize { get; set; }
 
     public string? LaptopDescription { get; set; }
 

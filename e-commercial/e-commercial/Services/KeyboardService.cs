@@ -1,4 +1,6 @@
 ﻿
+using AutoMapper;
+using e_commercial.Constants;
 using e_commercial.Data;
 using e_commercial.DTOs.Request.Keyboard;
 using e_commercial.DTOs.Request.Pagination;
@@ -15,13 +17,18 @@ namespace e_commercial.Services
 {
     public class KeyboardService
     {
+        private readonly IMapper _mapper;
         private readonly string productType = "Keyboard";
         private readonly IKeyboardRepository _keyboardRepository;
         protected readonly IManufacturerRepository _manufacturerRepository;
         protected readonly ICategoryRepository _categoryRepository;
 
-        public KeyboardService(ReagvnContext context, IKeyboardRepository keyboardRepository, IManufacturerRepository manufacturerRepository, ICategoryRepository categoryRepository)          
+        public KeyboardService(ReagvnContext context, IKeyboardRepository keyboardRepository, 
+            IManufacturerRepository manufacturerRepository, ICategoryRepository categoryRepository, IMapper mapper)          
         {
+            _mapper = mapper;
+            _manufacturerRepository = manufacturerRepository;
+            _categoryRepository = categoryRepository;
             _keyboardRepository = keyboardRepository;
         }
         public KeyboardDetailDTO GetKeyboardDetails(Guid id)
@@ -33,29 +40,13 @@ namespace e_commercial.Services
                 throw new KeyNotFoundException($"Keyboard with ID {id} not found.");
             }
 
-            return new KeyboardDetailDTO
-            {
-                KeyboardName = existing.KeyboardName,
-                KeyboardDescription = existing.KeyboardDescription,
-                KeyboardImage = existing.KeyboardImage,
-                KeyboardSwitch = existing.KeyboardSwitch,
-                CategoryName = existing.Category.CategoryName,
-                ManufacturerName = existing.Manufacturer.ManufacturerName
-            };
+            return _mapper.Map<KeyboardDetailDTO>(existing);
         }
 
-        public IEnumerable<KeyboardAllDetailDTO> GetKeyboardAllDetails()
+        public IEnumerable<KeyboardDetailDTO> GetKeyboardAllDetails()
         {
             var keyboards = _keyboardRepository.GetAll();
-            return keyboards.Select(k => new KeyboardAllDetailDTO
-            {
-                KeyboardName = k.KeyboardName,
-                KeyboardDescription = k.KeyboardDescription,
-                KeyboardImage = k.KeyboardImage,
-                KeyboardSwitch = k.KeyboardSwitch,
-                CategoryName = k.Category?.CategoryName,
-                ManufacturerName = k.Manufacturer?.ManufacturerName
-            });
+            return _mapper.Map<IEnumerable<KeyboardDetailDTO>>(keyboards);
         }
 
         public void CreateKeyboard(KeyboardCreateDTO keyboardDTO)
@@ -71,6 +62,11 @@ namespace e_commercial.Services
             {
                 throw new BadValidationException("Manufacturer cannot be null", nameof(manufacturer));
             }
+            var keyboard = _mapper.Map<Keyboard>(keyboardDTO);
+            keyboard.KeyboardId = Guid.NewGuid().ToString();
+            keyboard.CreatedAt = DateTime.Now;
+            keyboard.CreatedBy = RoleEnum.Admin;
+            _keyboardRepository.Add(keyboard);
         }
 
         public void UpdateKeyboard(KeyboardUpdateDTO keyboardDTO, Guid id)
@@ -84,14 +80,17 @@ namespace e_commercial.Services
             {
                 throw new BadValidationException($"Keyboard with ID {id} not found.", nameof(existing));
             }
-            existing.KeyboardName = keyboardDTO.KeyboardName;
+           /* existing.KeyboardName = keyboardDTO.KeyboardName;
             existing.KeyboardDescription = keyboardDTO.KeyboardDescription;
             existing.KeyboardImage = keyboardDTO.KeyboardImage;
             existing.KeyboardSwitch = keyboardDTO.KeyboardSwitch;
             existing.CategoryId = keyboardDTO.CategoryId;
             existing.ManufacturerId = keyboardDTO.ManufacturerId;
             existing.UpdatedAt = DateTime.UtcNow;
-            existing.UpdatedBy = "System"; // This should be replaced with the actual user ID or name
+            existing.UpdatedBy = "System"; // This should be replaced with the actual user ID or name*/
+            var keyboard = _mapper.Map<Keyboard>(existing);
+            keyboard.UpdatedBy = RoleEnum.Admin;
+            keyboard.UpdatedAt = DateTime.Now;
             _keyboardRepository.Update(existing);
         }
 

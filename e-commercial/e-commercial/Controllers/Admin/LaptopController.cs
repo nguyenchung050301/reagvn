@@ -1,8 +1,10 @@
 ﻿using e_commercial.Constants;
 using e_commercial.DTOs.Request.Laptop;
 using e_commercial.DTOs.Request.Pagination;
+using e_commercial.DTOs.Request.Product;
 using e_commercial.Exceptions;
 using e_commercial.Services;
+using e_commercial.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -14,8 +16,8 @@ namespace e_commercial.Controllers.Admin
     [ApiController]
     public class LaptopController : ControllerBase
     {
-        private readonly LaptopService _laptopService;
-        public LaptopController(LaptopService laptopService)
+        private readonly ILaptopService _laptopService;
+        public LaptopController(ILaptopService laptopService)
         {
             _laptopService = laptopService;
         }
@@ -67,23 +69,16 @@ namespace e_commercial.Controllers.Admin
         {
             return Ok(_laptopService.GetPagination(paginationDTO, name));
         }
- 
-        private string GetHeaderAuthor()
+
+        [HttpPost("filter")]
+        public IActionResult Filter([FromBody]LaptopProductFilterDTO filterDTO)
         {
-            if (Request.Headers.TryGetValue("Authorization", out var header))
-            {
-                var token = header.ToString();
-                if (token.StartsWith("Bearer ", StringComparison.OrdinalIgnoreCase)) //ko phan biet chu hoa chu thuong
-                {
-                    return token.Substring("Bearer ".Length).Trim();//lay ky tu tu` Bearer.Length tro di
-                }
-            }
-            Console.WriteLine("Raw Authorization header: " + HttpContext.Request.Headers["Authorization"]);
-            Console.WriteLine(HttpContext.Request.Headers["Authorization"].ToString().Replace("Bearer ", ""));
-            throw new BadValidationException("Authorization header sai", "Authorization");
-           
-         //   return HttpContext.Request.Headers["Authorization"].ToString().Replace("Bearer ", "");
-            //Lay Header Authorization tu Http Request, vd ket qua: Bearer ......, thay the Bearer = "" 
+            if (filterDTO.minPrice >= filterDTO.maxPrice || filterDTO.maxPrice <= filterDTO.minPrice) 
+                throw new BadValidationException("Bad Input Format");
+
+            return Ok(_laptopService.ProductFilter(filterDTO));
         }
+
+       
     }
 }
