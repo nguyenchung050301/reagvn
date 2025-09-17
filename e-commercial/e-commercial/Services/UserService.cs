@@ -6,53 +6,119 @@ using e_commercial.Constants;
 using e_commercial.Repositories.Interfaces;
 using e_commercial.DTOs.Request.User;
 using AutoMapper;
+
+using StackExchange.Redis;
+using e_commercial.DTOs.Response.User;
+using System;
 namespace e_commercial.Services
 {
     public class UserService
     {
         private readonly IMapper _mapper;
         private readonly IUserRepository _userRepository;
-        public UserService(IUserRepository userRepository, IMapper mapper)
+        private readonly IDatabase _redis;
+        private readonly RabbitMqProducer _producer;
+        public UserService(IUserRepository userRepository, IMapper mapper, IConnectionMultiplexer muxer, RabbitMqProducer producer)
         {
+            _redis = muxer.GetDatabase();
+            _producer = producer;
             _userRepository = userRepository;
             _mapper = mapper;
         }
-        public void Register(UserCreateDTO userDTO)
+        public async Task Register(UserCreateDTO userDTO)
         {
             //check register
-            var existing = _userRepository.GetAll().FirstOrDefault(p => p.Username == userDTO.Username);
+            var existing = _userRepository.GetAll().FirstOrDefault(p => p.Username == userDTO.Username || p.UserEmail == userDTO.UserEmail || p.UserPhone == userDTO.UserPhone);
             if (existing != null)
             {
-                throw new InvalidOperationException($"Username {userDTO.Username} already exists.");
+                if (existing.Username == userDTO.Username)
+                    throw new BadValidationException("Username already exists");
+
+                if (existing.UserEmail == userDTO.UserEmail)
+                    throw new BadValidationException("Email already exists");
+
+                if (existing.UserPhone == userDTO.UserPhone)
+                    throw new BadValidationException("Phone already exists");
             }
 
             if (!IsPhoneNumber(userDTO.Username))
             {
-               throw new BadValidationException("Not a valid phone number format.", nameof(userDTO.Username));
+                throw new BadValidationException("Not a valid phone number format.", nameof(userDTO.Username));
             }
 
             if (!IsEmail(userDTO.UserEmail))
             {
                 throw new BadValidationException("Not a valid email format.", nameof(userDTO.UserEmail));
             }
+
             //
-          /*  user.UserId = Guid.NewGuid().ToString();
-            user.Username = userDTO.Username;
-            string hashedPassword = hashPassword(userDTO.Userpassword);
-            user.Userpassword = hashedPassword;
-            user.UserRole = RoleEnum.User; // Default role
-            user.UserShownname = userDTO.UserShownname;
-            user.UserDistrict = userDTO.UserDistrict;
-            user.UserWard = userDTO.UserWard;
-            user.UserAddress = userDTO.UserAddress;
-            user.UserPhone = user.Username;
-            user.UserEmail = userDTO.UserEmail;*/
+            /*  user.UserId = Guid.NewGuid().ToString();
+              user.Username = userDTO.Username;
+              string hashedPassword = hashPassword(userDTO.Userpassword);
+              user.Userpassword = hashedPassword;
+              user.UserRole = RoleEnum.User; // Default role
+              user.UserShownname = userDTO.UserShownname;
+              user.UserDistrict = userDTO.UserDistrict;
+              user.UserWard = userDTO.UserWard;
+              user.UserAddress = userDTO.UserAddress;
+              user.UserPhone = user.Username;
+              user.UserEmail = userDTO.UserEmail;*/
+
             var user = _mapper.Map<User>(userDTO);
             user.UserId = Guid.NewGuid().ToString();
             user.Userpassword = hashPassword(user.Userpassword);
             user.CreatedAt = DateTime.UtcNow;
-            _userRepository.Add(user); 
+
+            string otp = RandomOTPGenerate();
+            await _redis.MyStringSetAsync(user.UserId, otp, 2000000000);
+            System.Console.WriteLine("OTP: " + _redis.StringGet(user.UserId));
+            _userRepository.Add(user);
+
+            var mailDTO = new UserMailDTO
+            {
+                UserEmail = user.UserEmail,
+                UserOTP = otp,
+                Username = user.Username,
+            };
+
+
+            await _producer.ProduceAsync("register-mail-queue", mailDTO);
         }
+
+
+
+        /// <summary>
+        /// Use case: user co mail xac nhan, nhan button (thay = duong link tren api)
+        /// B1: kiem tra email co verify chua
+        ///     Neu roi: log loi tra ve "mail da xac nhan roi" - Status code: 400
+        ///     Neu chua: -> B2
+        /// B2: kiem tra otp cua mail co dung trong redis hay ko
+        ///     Tim thay: thi moi so sanh, neu dung -> B3, neu sai thi thong bao loi "otp ko dung hoac het han"
+        ///     Ko tim thay: otp da het han -> API resend
+        /// B3: cap nhat column isVerified trong table User trong database
+        /// B4: tra status code: 204
+        /// </summary>
+        /// <param name="verificationDTO"></param>
+        public void VerifyOTP(UserVerificationDTO verificationDTO)
+        {
+            var user = _userRepository.FindByEmail(verificationDTO.UserMail);
+            if (user != null)
+            {
+                if (user.IsVerified == true)
+                {
+                    throw new BadValidationException("This mail is already verified");
+                }
+                System.Console.WriteLine(verificationDTO.UserMail + verificationDTO.UserOtp);
+                System.Console.WriteLine("redis:"+ _redis.StringGet(user.UserId));
+                //if verified = false
+                if (string.Equals(verificationDTO.UserOtp.ToString().Trim(), _redis.StringGet(user.UserId).ToString().Trim(), StringComparison.Ordinal)) //stringget = otp value, identify by userId
+                {
+                    System.Console.WriteLine("Trung");
+                }
+            }
+
+        }
+
         public User LoadByUserId(string userId)
         {
             //check login
@@ -82,7 +148,7 @@ namespace e_commercial.Services
         private bool IsPhoneNumber(string num)
         {
             string pattern = "^(\\+84|0)[\\s\\-\\.]?\\(?\\d{1,4}\\)?[\\s\\-\\.]?\\d{3,4}[\\s\\-\\.]?\\d{3,4}$";
-            
+
             return Regex.IsMatch(num, pattern);
         }
         private bool IsEmail(string email)
@@ -93,6 +159,12 @@ namespace e_commercial.Services
         private string hashPassword(string password)
         {
             return BCrypt.Net.BCrypt.HashPassword(password);
+        }
+        private string RandomOTPGenerate()
+        {
+            var random = new Random();
+            int num = random.Next(100000, 1000000);
+            return num.ToString();
         }
     }
 }

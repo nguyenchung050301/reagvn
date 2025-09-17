@@ -79,7 +79,7 @@ namespace e_commercial.Controllers
 
         [Authorize(Roles = RoleEnum.Admin)]
         [HttpPut("admin/order/{id}/cancel")]
-        public IActionResult CanncelOrderByAdmin(Guid id)
+        public IActionResult CancelOrderByAdmin(Guid id)
         {
             try
             {

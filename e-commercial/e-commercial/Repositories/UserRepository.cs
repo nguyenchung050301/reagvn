@@ -42,7 +42,7 @@ namespace e_commercial.Repositories
         public User GetByID(Guid id)
         {
             var existing = _dbSet
-                .FirstOrDefault(p => p.UserId == id.ToString());    
+                .FirstOrDefault(p => p.UserId == id.ToString());
             if (existing == null)
             {
                 throw new KeyNotFoundException($"User with ID {id} not found.");
@@ -62,6 +62,17 @@ namespace e_commercial.Repositories
             {
                 throw new KeyNotFoundException($"User with ID {id} not found.");
             }
+            return existing;
+        }
+
+        public User FindByEmail(string email)
+        {
+            var existing = _dbSet.Where(p => p.UserEmail == email).FirstOrDefault();
+            return existing;
+        }
+        public User FindByPhone(string phone)
+        {
+            var existing = _dbSet.Where(p => p.UserPhone == phone).FirstOrDefault();
             return existing;
         }
     }

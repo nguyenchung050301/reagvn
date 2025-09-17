@@ -1,7 +1,11 @@
 ﻿# Thong tin 
 Cach de scafford DbContext tu MySQL
 ```bash
-Scaffold-DbContext 'Name=ConnectionStrings:MySQLConnection' Pomelo.EntityFrameworkCore.MySql -ContextDir Data -OutputDir Models -force
+Visual Studio: Scaffold-DbContext 'Name=ConnectionStrings:MySQLConnection' Pomelo.EntityFrameworkCore.MySql -ContextDir Data -OutputDir Models -force
+
+Visual code: dotnet ef dbcontext scaffold "server=localhost;port=3306;database=reagvn;user=root;password=123456" Pomelo.EntityFrameworkCore.MySql --context-dir Data --output-dir Models --force
+
+
 ```
 
 Cach tao RSA key cho Asymmetric encryption

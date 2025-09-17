@@ -10,5 +10,6 @@ namespace e_commercial.Repositories.Interfaces
         void Update(User user);
         void Delete(Guid id);
         void Delete(User user);
+        public User FindByEmail(string email);
     }
 }

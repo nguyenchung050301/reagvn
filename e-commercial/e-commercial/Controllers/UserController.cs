@@ -13,13 +13,14 @@ namespace e_commercial.Controllers
     [ApiController]
     public class UserController : ControllerBase
     {
+
         private readonly UserService _userService;
-        private readonly JWTService _jwtService;
+
         private readonly ProductService _productService;
-        public UserController(UserService userService, JWTService jwtService, ProductService productService)
+        public UserController(UserService userService, ProductService productService)
         {
+
             _userService = userService;
-            _jwtService = jwtService;
             _productService = productService;
         }
         /// <summary>
@@ -28,25 +29,23 @@ namespace e_commercial.Controllers
         /// field bat buoc: username, password, ten khach hang, dia chi, sdt, user role default la user
         ///
         [HttpPost("register")]
-        public IActionResult Register(UserCreateDTO user)
+        public async Task<IActionResult> Register(UserCreateDTO user)
         {
-            try
-            {
-                _userService.Register(user);
-                return Created();
-            }
-            catch (BadValidationException ex)
-            {
-                return BadRequest(ex.Message);
-
-            }
+            await _userService.Register(user);
+            return Created();
         }
 
+        [HttpPost("verify-otp")]
+        public IActionResult VerifyOTP(UserVerificationDTO verificationDTO)
+        {
+            _userService.VerifyOTP(verificationDTO);
+            return Ok();
+        }
         [HttpPost("product/search")]
         public IActionResult SearchProduct([FromBody] ProductPaginationRequestDTO requestDTO)
         {
             var result = _productService.GetPagination(requestDTO);
-            return Ok(result); 
+            return Ok(result);
         }
     }
 }

@@ -10,6 +10,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
+using RabbitMQ.Client;
+using RabbitMQ.Client.Events;
+using StackExchange.Redis;
 using System.Security.Cryptography;
 using System.Text.Json.Serialization;
 
@@ -49,9 +52,20 @@ builder.Services.AddScoped<PaymentService>();
 builder.Services.AddScoped<OrderService>();
 builder.Services.AddScoped<ProductService>();
 builder.Services.AddScoped<KeyboardService>();
-
-builder.Services.AddScoped<ILaptopService, LaptopService>();
 builder.Services.AddScoped<MailService>();
+builder.Services.AddHostedService<MailService>();
+
+builder.Services.AddSingleton<RabbitMqProducer>();
+builder.Services.AddSingleton<RabbitMqConsumer>();
+builder.Services.AddSingleton<IConnectionMultiplexer>(
+    ConnectionMultiplexer.Connect(builder.Configuration["ConnectionStrings:RedisHost"]));
+// builder.Services.AddStackExchangeRedisCache(options =>
+// {
+//     options.Configuration = builder.Configuration["ConnectionStrings:RedisHost"];
+//     // Có thể thêm các tùy chọn khác như instance name, ssl...
+//     // options.InstanceName = "MyApp:";
+// });
+builder.Services.AddScoped<ILaptopService, LaptopService>();
 
 
 builder.Services.AddAutoMapper(cfg =>
@@ -71,7 +85,7 @@ builder.Services.AddAutoMapper(cfg =>
 builder.Services.AddDbContext<ReagvnContext>(options =>
 {
     var connectionString = builder.Configuration.GetConnectionString("MySQLConnection");
-    
+
     // Check if we're in test environment
     if (builder.Environment.IsEnvironment("Test"))
     {
@@ -110,6 +124,32 @@ builder.Services.Configure<ApiBehaviorOptions>(options =>
 });
 
 
+// connection factory
+ConnectionFactory _factory = new ConnectionFactory()
+{
+    HostName = "localhost",
+    UserName = "admin",
+    Password = "123456"
+};
+
+builder.Services.AddSingleton(_factory);
+// end 
+
+
+// channel
+using IConnection connection = await _factory.CreateConnectionAsync();
+using IChannel channel = await connection.CreateChannelAsync();
+
+builder.Services.AddSingleton(connection);
+builder.Services.AddSingleton(channel);
+// end
+
+//AsyncEventingBasicConsumer
+AsyncEventingBasicConsumer consumer = new AsyncEventingBasicConsumer(channel);
+builder.Services.AddSingleton(consumer);
+
+//end
+
 var publicKey = builder.Configuration["JWT:PublicKeyPath"];
 using var rsa = RSA.Create();
 rsa.ImportFromPem(File.ReadAllText(publicKey).ToCharArray());
@@ -123,7 +163,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJw
         ValidateIssuer = true,
         ValidateAudience = true,
         ValidateLifetime = true,
-        IssuerSigningKey = rsaKey,    
+        IssuerSigningKey = rsaKey,
         ValidateIssuerSigningKey = true,
         ClockSkew = TimeSpan.Zero, // Disable clock skew to ensure token expiration is precise
     };

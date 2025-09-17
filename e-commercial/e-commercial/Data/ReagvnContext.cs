@@ -44,14 +44,8 @@ public partial class ReagvnContext : DbContext
     public virtual DbSet<User> Users { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-    {
-        // Only configure if not already configured (for cases where Program.cs doesn't inject configuration)
-        if (!optionsBuilder.IsConfigured)
-        {
-            optionsBuilder.UseMySql("Server=localhost;Database=gearvn_test;User=root;Password=password;", 
-                Microsoft.EntityFrameworkCore.ServerVersion.Parse("8.0.42-mysql"));
-        }
-    }
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
+        => optionsBuilder.UseMySql("server=localhost;port=3306;database=reagvn;user=root;password=123456", Microsoft.EntityFrameworkCore.ServerVersion.Parse("8.0.42-mysql"));
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -547,6 +541,7 @@ public partial class ReagvnContext : DbContext
             entity.Property(e => e.CreatedBy)
                 .HasMaxLength(36)
                 .HasColumnName("created_by");
+            entity.Property(e => e.IsVerified).HasColumnName("is_verified");
             entity.Property(e => e.UpdatedAt)
                 .HasColumnType("datetime")
                 .HasColumnName("updated_at");
