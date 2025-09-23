@@ -10,6 +10,7 @@ using AutoMapper;
 using StackExchange.Redis;
 using e_commercial.DTOs.Response.User;
 using System;
+using System.Text.Json;
 namespace e_commercial.Services
 {
     public class UserService
@@ -69,22 +70,31 @@ namespace e_commercial.Services
             user.Userpassword = hashPassword(user.Userpassword);
             user.CreatedAt = DateTime.UtcNow;
 
-            string otp = RandomOTPGenerate();
-            await _redis.MyStringSetAsync(user.UserId, otp, 2000000000);
-            System.Console.WriteLine("OTP: " + _redis.StringGet(user.UserId));
+
             _userRepository.Add(user);
-
             var mailDTO = new UserMailDTO
-            {
-                UserEmail = user.UserEmail,
-                UserOTP = otp,
-                Username = user.Username,
-            };
+             {
+                 UserEmail = user.UserEmail,
+              //   UserOTP = otp,
+                 Username = user.Username,
+             };
+            await SendOtpToMail(mailDTO, user.UserId);
 
+        }
+        /// <summary>
+        /// NOTE: Ko duoc de user spam gui mail 
+        /// </summary>
+        /// <param name="mailDTO"></param>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        public async Task SendOtpToMail(UserMailDTO mailDTO, string userId)
+        {
+            mailDTO.UserOTP = RandomOTPGenerate();
+            await _redis.MyStringSetAsync(userId, mailDTO.UserOTP, 2000000000);
 
             await _producer.ProduceAsync("register-mail-queue", mailDTO);
-        }
 
+        }
 
 
         /// <summary>
@@ -108,13 +118,18 @@ namespace e_commercial.Services
                 {
                     throw new BadValidationException("This mail is already verified");
                 }
-                System.Console.WriteLine(verificationDTO.UserMail + verificationDTO.UserOtp);
-                System.Console.WriteLine("redis:"+ _redis.StringGet(user.UserId));
+
+                string redisOtp = JsonSerializer.Deserialize<string>(_redis.StringGet(user.UserId));
                 //if verified = false
-                if (string.Equals(verificationDTO.UserOtp.ToString().Trim(), _redis.StringGet(user.UserId).ToString().Trim(), StringComparison.Ordinal)) //stringget = otp value, identify by userId
+
+                if (verificationDTO.UserOtp.Trim() != redisOtp) //stringget = otp value, identify by userId
                 {
-                    System.Console.WriteLine("Trung");
+                    throw new BadValidationException("OTP is not matched or expired");
                 }
+
+                //if found
+                user.IsVerified = true;
+                _userRepository.Update(user);
             }
 
         }

@@ -14,9 +14,11 @@ namespace e_commercial.Tests
     {
         protected override void ConfigureWebHost(IWebHostBuilder builder)
         {
+
             //Clone an in memory DB, use program.cs in main solution
             builder.ConfigureServices(services =>
             {
+
                 var descriptor = services.SingleOrDefault(
                     d => d.ServiceType == typeof(DbContextOptions<ReagvnContext>));
                 if (descriptor != null) services.Remove(descriptor);

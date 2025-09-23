@@ -1,9 +1,12 @@
 ﻿using e_commercial.Constants;
 using e_commercial.DTOs.Request.Pagination;
 using e_commercial.DTOs.Request.User;
+using e_commercial.DTOs.Response.User;
 using e_commercial.Exceptions;
+using e_commercial.Models;
 using e_commercial.Services;
 using e_commercial.Services.ParentService;
+using HandlebarsDotNet;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -39,6 +42,13 @@ namespace e_commercial.Controllers
         public IActionResult VerifyOTP(UserVerificationDTO verificationDTO)
         {
             _userService.VerifyOTP(verificationDTO);
+            return Ok();
+        }
+
+        [HttpPost("verify-resend")]
+        public async Task<IActionResult> SendOtp([FromBody] UserMailDTO mailDTO,string userId)
+        {
+            await _userService.SendOtpToMail(mailDTO, userId);
             return Ok();
         }
         [HttpPost("product/search")]

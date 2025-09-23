@@ -1,0 +1,28 @@
+
+services:
+  reagvn-mq: 
+    image: rabbitmq:3.13.7-management
+    container_name: reagvn-mq
+    hostname: reagvn-mq
+    ports:
+       - "5672:5672" # AMQP port
+       - "15672:15672" # Management UI port
+    environment:
+      RABBITMQ_DEFAULT_USER: admin
+      RABBITMQ_DEFAULT_PASS: 123456
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq/
+      - rabbitmq_logs:/var/log/rabbitmq/
+    
+  reagvn-redis:
+    image: redis:latest
+    container_name: reagvn-redis
+    hostname: reagvn-redis
+    ports:
+      - "6379:6379"
+volumes:
+  rabbitmq_data:
+  rabbitmq_logs:
+  
+  
+

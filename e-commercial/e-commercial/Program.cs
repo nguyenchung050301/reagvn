@@ -16,6 +16,8 @@ using StackExchange.Redis;
 using System.Security.Cryptography;
 using System.Text.Json.Serialization;
 
+using System.Threading.RateLimiting;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -168,6 +170,27 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJw
         ClockSkew = TimeSpan.Zero, // Disable clock skew to ensure token expiration is precise
     };
 });
+
+//Rate Limit OTP Resend
+var otpRateLimiter = PartitionedRateLimiter.Create<HttpContext, TokenBucketRateLimiter>(httpContext =>
+{
+    var partitionKey = httpContext.User.Identity?.Name 
+                       ?? httpContext.Connection.RemoteIpAddress?.ToString() 
+                       ?? "anonymous";
+
+    return RateLimitPartition.GetTokenBucketLimiter(
+        partitionKey,
+        key => new TokenBucketRateLimiterOptions
+        {
+            TokenLimit = 5,
+            TokensPerPeriod = 5,
+            ReplenishmentPeriod = TimeSpan.FromMinutes(1),
+            QueueProcessingOrder = QueueProcessingOrder.OldestFirst,
+            QueueLimit = 0
+        });
+});
+
+//
 
 
 builder.Services.AddAuthorization();

@@ -6,3 +6,5 @@
 **/obj
 **/.vs
 **/bin
+**/rabbitmq_data
+**/rabbitmq_logs

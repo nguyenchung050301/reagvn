@@ -10,5 +10,5 @@ public class UserMailDTO
     public string? UserEmail { get; set; }
     
     public string? UserOTP { get; set; }
-    public bool isVerified { get; set; }
+
 }
