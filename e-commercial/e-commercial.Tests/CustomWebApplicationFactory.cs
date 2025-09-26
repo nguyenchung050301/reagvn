@@ -16,18 +16,18 @@ namespace e_commercial.Tests
         {
 
             //Clone an in memory DB, use program.cs in main solution
-            builder.ConfigureServices(services =>
-            {
+            // builder.ConfigureServices(services =>
+            // {
 
-                var descriptor = services.SingleOrDefault(
-                    d => d.ServiceType == typeof(DbContextOptions<ReagvnContext>));
-                if (descriptor != null) services.Remove(descriptor);
+            //     var descriptor = services.SingleOrDefault(
+            //         d => d.ServiceType == typeof(DbContextOptions<ReagvnContext>));
+            //     if (descriptor != null) services.Remove(descriptor);
 
-                services.AddDbContext<ReagvnContext>(options =>
-                    options.UseInMemoryDatabase("CloneDB"));
+            //     services.AddDbContext<ReagvnContext>(options =>
+            //         options.UseInMemoryDatabase("CloneDB"));
 
 
-            });
+            // });
 
             builder.UseEnvironment("Test");
             base.ConfigureWebHost(builder);

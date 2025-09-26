@@ -87,7 +87,7 @@ builder.Services.AddAutoMapper(cfg =>
 builder.Services.AddDbContext<ReagvnContext>(options =>
 {
     var connectionString = builder.Configuration.GetConnectionString("MySQLConnection");
-
+    System.Console.WriteLine(builder.Environment);
     // Check if we're in test environment
     if (builder.Environment.IsEnvironment("Test"))
     {
@@ -172,22 +172,26 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJw
 });
 
 //Rate Limit OTP Resend
-var otpRateLimiter = PartitionedRateLimiter.Create<HttpContext, TokenBucketRateLimiter>(httpContext =>
-{
-    var partitionKey = httpContext.User.Identity?.Name 
-                       ?? httpContext.Connection.RemoteIpAddress?.ToString() 
-                       ?? "anonymous";
 
-    return RateLimitPartition.GetTokenBucketLimiter(
-        partitionKey,
-        key => new TokenBucketRateLimiterOptions
-        {
-            TokenLimit = 5,
-            TokensPerPeriod = 5,
-            ReplenishmentPeriod = TimeSpan.FromMinutes(1),
-            QueueProcessingOrder = QueueProcessingOrder.OldestFirst,
-            QueueLimit = 0
-        });
+builder.Services.AddSingleton<PartitionedRateLimiter<HttpContext>>(p =>
+{
+    return PartitionedRateLimiter.Create<HttpContext, string>(httpContext => //Create<TResource, TPartitionKey>
+    {
+        var partitionKey = httpContext.User.Identity?.Name
+                           ?? httpContext.Connection.RemoteIpAddress?.ToString()
+                           ?? "anonymous";
+
+        return RateLimitPartition.GetTokenBucketLimiter(
+            partitionKey,
+            _ => new TokenBucketRateLimiterOptions
+            {
+                TokenLimit = 5, //token limit in each bucket
+                TokensPerPeriod = 5, //refill token per period
+                ReplenishmentPeriod = TimeSpan.FromMinutes(5), //how long to refill
+                QueueProcessingOrder = QueueProcessingOrder.OldestFirst,
+                QueueLimit = 0
+            });
+    });
 });
 
 //

@@ -78,7 +78,7 @@ namespace e_commercial.Services
               //   UserOTP = otp,
                  Username = user.Username,
              };
-            await SendOtpToMail(mailDTO, user.UserId);
+            await SendOtpToMail(mailDTO);
 
         }
         /// <summary>
@@ -87,10 +87,11 @@ namespace e_commercial.Services
         /// <param name="mailDTO"></param>
         /// <param name="userId"></param>
         /// <returns></returns>
-        public async Task SendOtpToMail(UserMailDTO mailDTO, string userId)
+        public async Task SendOtpToMail(UserMailDTO mailDTO)
         {
+            var user = _userRepository.FindByEmail(mailDTO.UserEmail);
             mailDTO.UserOTP = RandomOTPGenerate();
-            await _redis.MyStringSetAsync(userId, mailDTO.UserOTP, 2000000000);
+            await _redis.MyStringSetAsync(user.UserId, mailDTO.UserOTP, 2000000000);
 
             await _producer.ProduceAsync("register-mail-queue", mailDTO);
 

@@ -1,4 +1,5 @@
-﻿using e_commercial.Constants;
+﻿using System.Threading.RateLimiting;
+using e_commercial.Constants;
 using e_commercial.DTOs.Request.Pagination;
 using e_commercial.DTOs.Request.User;
 using e_commercial.DTOs.Response.User;
@@ -20,11 +21,14 @@ namespace e_commercial.Controllers
         private readonly UserService _userService;
 
         private readonly ProductService _productService;
-        public UserController(UserService userService, ProductService productService)
+        private readonly PartitionedRateLimiter<HttpContext> _otpRateLimiter;
+
+        public UserController(UserService userService, ProductService productService, PartitionedRateLimiter<HttpContext> otpRateLimiter)
         {
 
             _userService = userService;
             _productService = productService;
+            _otpRateLimiter = otpRateLimiter;
         }
         /// <summary>
         /// dang ky: ten tai khoan co the nhap sdt hoac email
@@ -46,9 +50,16 @@ namespace e_commercial.Controllers
         }
 
         [HttpPost("verify-resend")]
-        public async Task<IActionResult> SendOtp([FromBody] UserMailDTO mailDTO,string userId)
+        public async Task<IActionResult> SendOtp([FromBody] UserMailDTO mailDTO)
         {
-            await _userService.SendOtpToMail(mailDTO, userId);
+            var lease = await _otpRateLimiter.AcquireAsync(HttpContext); //lease get
+
+            if (!lease.IsAcquired)
+            {
+                throw new BadValidationException("Too many OTP request");
+
+            }
+            await _userService.SendOtpToMail(mailDTO);
             return Ok();
         }
         [HttpPost("product/search")]
